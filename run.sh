@@ -1,1 +1,4 @@
-julia ApproximatePOMDP.jl 3 5 5 4 5 1000
+# julia ApproximatePOMDP.jl 3 3 0.8 6 6 20 1000
+# julia ApproximatePOMDP.jl 3 3 0.9 6 6 20 1000
+# julia ApproximatePOMDP.jl 3 3 0.99 6 6 20 1000
+julia ApproximatePOMDP.jl 3 3 0.999 6 6 20 1000

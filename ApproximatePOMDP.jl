@@ -1,6 +1,6 @@
-# ARGS = [N, K, u_grain, d_grain, exp_iters, exp_steps]
+# ARGS = [N, K, discount, u_grain, d_grain, exp_iters, exp_steps]
 
-using POMDPs, QuickPOMDPs, POMDPModelTools, POMDPPolicies, Parameters, Random, Plots, LinearAlgebra, POMDPTools, BasicPOMCP, D3Trees, GridInterpolations, POMCPOW, POMDPModels, Combinatorics, Dates
+using POMDPs, QuickPOMDPs, POMDPModelTools, POMDPPolicies, Parameters, Random, Plots, LinearAlgebra, POMDPTools, BasicPOMCP, D3Trees, GridInterpolations, POMCPOW, POMDPModels, Combinatorics, Dates, Serialization, ParticleFilters
 
 expID = Dates.format(Dates.now(), "yymd_HHMMS")
 
@@ -18,13 +18,13 @@ log("Running experiment with ID "*expID)
     N::Int = parse(Int64, ARGS[1])           # size of item set
     K::Int = parse(Int64, ARGS[2])           # size of arm set
     M::Int = 2                               # size of beta set
-    y::Real = 0.99                           # discount factor
+    y::Float64 = parse(Float64, ARGS[3])     # discount factor
     umax::Real = 10                          # max utility
-    u_grain::Int = parse(Int64, ARGS[3])     # granularity of utility approximation
-    d_grain::Int = parse(Int64, ARGS[4])     # granularity of arm distribution approximation
-    beta:: Array{Float64} = [0.01, 10.0]  # teacher beta values
-    exp_iters::Int = parse(Int64, ARGS[5])   # number of rollouts to run
-    exp_steps::Int = parse(Int64, ARGS[6])   # number of timesteps per rollout
+    u_grain::Int = parse(Int64, ARGS[4])     # granularity of utility approximation
+    d_grain::Int = parse(Int64, ARGS[5])     # granularity of arm distribution approximation
+    beta:: Array{Float64} = [0.01, 10.0]     # teacher beta values
+    exp_iters::Int = parse(Int64, ARGS[6])   # number of rollouts to run
+    exp_steps::Int = parse(Int64, ARGS[7])   # number of timesteps per rollout
 end
 
 params = MyParameters()
@@ -202,38 +202,94 @@ solver = POMCPOWSolver()
 planner = solve(solver, pomdp);
 log("solved POMDP")
 
-# plot rollouts
+# save serialized planner
+open("./policies/"*expID*"_policy.txt", "w") do file
+    serialize(file, planner)
+end
+
+log("saved policy to "*"./policies/"*expID*"_policy.txt")
+
+# simulate rollouts
 steps = params.exp_steps
 iters = params.exp_iters
-prior = Uniform(S)
-initial_state = S[100]
-sim = RolloutSimulator(max_steps=steps)
 
-log("generating "*string(iters)*" rollouts for "*string(steps)*" timesteps each")
-
-random_R = zeros(iters)
-POMCP_R = zeros(iters)
-max_R = fill(maximum([dot(initial_state.u, initial_state.d[i]) for i in 1:params.K])*steps, iters)
-
-for i in 1:iters
-    log("Running simulation "*string(i))
-    u1 = updater(RandomPolicy(pomdp))
-    u2 = updater(planner)
-    random_R[i] = simulate(sim, pomdp, RandomPolicy(pomdp), u1, prior, initial_state)
-    POMCP_R[i] = simulate(sim, pomdp, planner, u2, prior, initial_state)
+# POMCPOW rollouts
+# hardcoded initial states
+initial_states = [State([0.0, 8.0, 10.0], Array{Float64}[[0.0, 0.0, 1.0], [0.6, 0.0, 0.4], [1.0, 0.0, 0.0]], [0.01, 10.0]) for i in 1:iters]
+POMCPOW_R = Array{Float64}(undef, iters)
+beliefs = Array{Array{ParticleFilters.ParticleCollection{State}}}(undef, (iters, steps))
+for iter in 1:iters
+    log("logging POMCPOW simulation "*string(iter)*" to "*"./sims/"*expID*"_run"*string(iter)*".txt")
+    t = 1
+    r_accum = 0.
+    beliefs_iter = Array{ParticleFilters.ParticleCollection{State}}(undef, steps)
+    for (s, a, o, r, b) in stepthrough(pomdp, planner, updater(planner), Uniform(S), initial_states[iter], "s,a,o,r,b", max_steps=steps)
+        r_accum = r_accum + r
+        beliefs_iter[t] = b
+        if t == 1
+            open("./sims/"*expID*"_run"*string(iter)*".txt", "w") do file
+                write(file, string(s))
+            end
+#             initial_states[iter] = s
+        end
+        if a.isBeta
+            msg = "\n"*string(t)*",B,"*a.name*",(i"*string(o.p.i0)*"-i"*string(o.p.i1)*";"*string(o.p.label)*"),"*string(r)
+        else
+            msg = "\n"*string(t)*",C,"*a.name*",i"*string(o.i)*","*string(r)
+        end
+        open("./sims/"*expID*"_run"*string(iter)*".txt", "a") do file
+            write(file, msg)
+        end
+        t = t + 1
+    end
+    beliefs[iter] = beliefs_iter
+    POMCPOW_R[iter] = r_accum
 end
     
-log("ran "*string(iters)*" rollouts for "*string(steps)*" timesteps each")
-log("random R: "*string(random_R))
-log("POMCP R: "*string(POMCP_R))
+log("ran "*string(iters)*" POMCPOW rollouts for "*string(steps)*" timesteps each")
+log("POMCPOW R: "*string(POMCPOW_R))
+
+open("./beliefs/"*expID*"_belief.txt", "w") do file
+    serialize(file, beliefs)
+end
+
+log("saved beliefs to "*"./beliefs/"*expID*"_belief.txt")
+
+# random rollouts
+prior = Uniform(S)
+sim = RolloutSimulator(max_steps=steps)
+
+random_R = zeros(iters)
+for iter in 1:iters
+    # use the same initial states as the POMCPOW runs
+    initial_state = initial_states[iter]
+    up = updater(RandomPolicy(pomdp))
+    result = simulate(sim, pomdp, RandomPolicy(pomdp), up, prior, initial_state)
+    random_R[iter] = result
+end
+
+log("ran "*string(iters)*" random rollouts for "*string(steps)*" timesteps each")
+log("Random R: "*string(random_R))
+
+# calculate maximum possible reward
+max_R = zeros(iters)
+
+for iter in 1:iters
+    # use the same initial states as the POMCPOW runs
+    initial_state = initial_states[iter]
+    max_R[iter] = maximum([dot(initial_state.u, initial_state.d[i]) for i in 1:params.K])*steps
+end
+
 log("Max R: "*string(max_R))
 
-fig = plot(1:iters, [random_R,POMCP_R,max_R], 
+# plot figure
+fig = plot(1:iters, [random_R,POMCPOW_R], 
     seriestype = :scatter, 
-    label=["random" "POMCP" "max"], 
-    ylims = (0,maximum(max_R)+100),
+    label=["random" "POMCP"], 
     xticks = 0:1:iters,
     xlabel = "run",
-    ylabel = "reward (" * string(steps) * " timesteps)"
+    ylabel = "reward (" * string(steps) * " timesteps)",
+    ylims = (0,maximum(POMCPOW_R)*1.2)
 )
 savefig(fig,"./plots/reward_ID"*string(expID)*"_step"*string(steps)*"_roll"*string(iters)*".png")
+log("saved fig to ./plots/reward_ID"*string(expID)*"_step"*string(steps)*"_roll"*string(iters)*".png")
