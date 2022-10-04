@@ -174,39 +174,43 @@ function plot_proportion_actions_all(a, actions, window, title)
         xlabel = "timestep")
 end
 
-function plot_proportion_high_B(a, gran::Int, y, expID)
-    runs = length(a)
-    @assert length(a[1])%gran == 0
+function plot_proportion_high_B(a, gran::Int, y_labels, title)
+    exps = length(a)
+    runs = length(a[1])
+    time = length(a[1][1])
+    @assert time%gran == 0
     
     b_list = ["B1", "B2"]
     
-    any_b = [[arm in b_list for arm in a[i]] for i in 1:runs]
-    high_b = [[arm == "B2" for arm in a[i]] for i in 1:runs]
+    any_b = [[[arm in b_list for arm in a[exp][run]] for run in 1:runs] for exp in 1:exps]
+    high_b = [[[arm == "B2" for arm in a[exp][run]] for run in 1:runs] for exp in 1:exps]
 
-    n = floor(Int, length(a[1])/gran)
-    timesteps = zeros(n)
-    percent_high_B = zeros((runs, n))
-    for i in 1:n
-        f = i*gran
-        s = f-(gran-1)
-        timesteps[i] = i*gran
-        for run in 1:runs
-            times_any_B = sum(any_b[run][s:f])
-            times_high_B = sum(high_b[run][s:f])
-            percent_high_B[run,i] = times_high_B/times_any_B
+    n = floor(Int, time/gran)
+    percent_high_B = zeros((exps, runs, n))
+    for exp in 1:exps
+        for i in 1:n
+            f = i*gran
+            s = f-(gran-1)
+            for run in 1:runs
+                times_any_B = sum(any_b[exp][run][s:f])
+                times_high_B = sum(high_b[exp][run][s:f])
+                percent_high_B[exp,run,i] = times_high_B/times_any_B
+            end
         end
     end
     
-    inter = [percent_high_B[:,i] for i in 1:n]
-    # avg non-nan elements on each element of inter
-    yplot = [nanmean(q) for q in inter]
+    # avg across dim 2, ignoring non elements 
+    b_avg = nanmean(percent_high_B, dims=2)    
+    b_avg_array = [b_avg[i,1,:] for i in 1:size(b_avg)[1]]
     
-    plot(timesteps, yplot,
-        ylims = (0,1.2),
-        legend = false,
-        title = "% high B, y="*string(y)*" (exp "*expID*", "*string(runs)*" runs)",
+    x = collect(range(gran, length(a[1][1]), floor(Int, length(a[1][1])/gran)))
+    
+    plot(x, b_avg_array,
+        ylims = (0,1.),
+        labels = y_labels,
+        title = title,
         ylabel = "% high B/% any B ("*string(gran)*" window)",
         xlabel = "timestep")
-end
+    end
 
 end
