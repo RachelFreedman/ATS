@@ -22,7 +22,7 @@ log("Running experiment with ID "*expID)
     umax::Real = 10                          # max utility
     u_grain::Int = parse(Int64, ARGS[4])     # granularity of utility approximation
     d_grain::Int = parse(Int64, ARGS[5])     # granularity of arm distribution approximation
-    beta:: Array{Float64} = [0.01, 10.0]     # teacher beta values
+    beta:: Array{Float64} = [0., 1.]     # teacher beta values
     exp_iters::Int = parse(Int64, ARGS[6])   # number of rollouts to run
     exp_steps::Int = parse(Int64, ARGS[7])   # number of timesteps per rollout
     s_index::Int = parse(Int64, ARGS[8])     # index of true state
@@ -257,22 +257,6 @@ open("./beliefs/"*expID*"_belief.txt", "w") do file
 end
 
 log("saved beliefs to "*"./beliefs/"*expID*"_belief.txt")
-
-# random rollouts
-prior = Uniform(S)
-sim = RolloutSimulator(max_steps=steps)
-
-random_R = zeros(iters)
-for iter in 1:iters
-    # use the same initial states as the POMCPOW runs
-    initial_state = initial_states[iter]
-    up = updater(RandomPolicy(pomdp))
-    result = simulate(sim, pomdp, RandomPolicy(pomdp), up, prior, initial_state)
-    random_R[iter] = result
-end
-
-log("ran "*string(iters)*" random rollouts for "*string(steps)*" timesteps each")
-log("Random R: "*string(random_R))
 
 # calculate maximum possible reward
 max_R = zeros(iters)
