@@ -1,4 +1,4 @@
-# ARGS = [N, K, discount, u_grain, d_grain, exp_iters, exp_steps]
+# ARGS = [N, K, discount, u_grain, d_grain, exp_iters, exp_steps, state_index]
 
 using POMDPs, QuickPOMDPs, POMDPModelTools, POMDPPolicies, Parameters, Random, Plots, LinearAlgebra, POMDPTools, BasicPOMCP, D3Trees, GridInterpolations, POMCPOW, POMDPModels, Combinatorics, Dates, Serialization, ParticleFilters
 
@@ -25,6 +25,7 @@ log("Running experiment with ID "*expID)
     beta:: Array{Float64} = [0.01, 10.0]     # teacher beta values
     exp_iters::Int = parse(Int64, ARGS[6])   # number of rollouts to run
     exp_steps::Int = parse(Int64, ARGS[7])   # number of timesteps per rollout
+    s_index::Int = parse(Int64, ARGS[8])     # index of true state
 end
 
 params = MyParameters()
@@ -215,7 +216,9 @@ iters = params.exp_iters
 
 # POMCPOW rollouts
 # hardcoded initial states
-initial_states = [State([0.0, 8.0, 10.0], Array{Float64}[[0.0, 0.0, 1.0], [0.6, 0.0, 0.4], [1.0, 0.0, 0.0]], [0.01, 10.0]) for i in 1:iters]
+init_s = S[params.s_index]
+log("hardcoded state: "*string(init_s))
+initial_states = [init_s for i in 1:iters]
 POMCPOW_R = Array{Float64}(undef, iters)
 beliefs = Array{Array{ParticleFilters.ParticleCollection{State}}}(undef, (iters, steps))
 for iter in 1:iters
