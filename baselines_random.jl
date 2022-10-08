@@ -18,12 +18,12 @@ log("Running experiment with ID " * expID)
 @with_kw struct MyParameters
     N::Int = parse(Int64, ARGS[1])           # size of item set
     K::Int = parse(Int64, ARGS[2])           # size of arm set
-    M::Int = 2                               # size of beta set
+    M::Int = 3                               # size of beta set
     y::Float64 = parse(Float64, ARGS[3])     # discount factor
     umax::Real = 10                          # max utility
     u_grain::Int = parse(Int64, ARGS[4])     # granularity of utility approximation
     d_grain::Int = parse(Int64, ARGS[5])     # granularity of arm distribution approximation
-    beta::Array{Float64} = [0., 1.]         # teacher beta values
+    beta::Array{Float64} = [0., 0.01, 50.]         # teacher beta values
     exp_iters::Int = parse(Int64, ARGS[6])   # number of rollouts to run
     exp_steps::Int = parse(Int64, ARGS[7])   # number of timesteps per rollout
     s_index::Int = parse(Int64, ARGS[8])     # index of true state
@@ -460,4 +460,4 @@ for iter in 1:params.exp_iters
 end
     
 log("ran "*string(params.exp_iters)*" random teacher rollouts for "*string(params.exp_steps)*" timesteps each")
-log("POMCPOW R: "*string(POMCPOW_R))
+log("POMCPOW + random teacher selection R: "*string(POMCPOW_R))

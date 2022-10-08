@@ -36,7 +36,7 @@ function get_optimal_arm(s::State)
             max_val = val_i
         end
     end
-    return "C"*string(max_arm)
+    return "C"*string(max_arm), max_val
 end
 
 function get_star(expID::String, runs::Int)
@@ -102,6 +102,21 @@ function print_action_hist(a::Vector{Vector{SubString{String}}}, actions)
 end
 
 function get_avg_belief(beliefs::Matrix{Array{ParticleCollection{State}}})
+    runs = size(beliefs)[1]
+    final_states = [mode(beliefs[run][end]) for run in 1:runs]
+    final_state_belief = Array{Array{Float64}}(undef, runs)
+    for run in 1:runs
+        wt_run = Array{Float64}(undef, length(beliefs[run]))
+        for i in 1:length(beliefs[run])
+            wt_run[i] = pdf(beliefs[run][i], final_states[run])
+        end
+        final_state_belief[run] = wt_run
+    end
+    avg_belief = [mean([x[i] for x in final_state_belief]) for i in 1:length(final_state_belief[1])]
+    return avg_belief
+end 
+
+function get_avg_belief(beliefs)
     runs = size(beliefs)[1]
     final_states = [mode(beliefs[run][end]) for run in 1:runs]
     final_state_belief = Array{Array{Float64}}(undef, runs)
