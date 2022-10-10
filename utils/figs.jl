@@ -33,6 +33,27 @@ function plot_avg_r_multiple_experiments(r::Vector{Vector{Vector{Float64}}}, gra
         labels="max")
 end
 
+function plot_cumulative_avg_r_multiple_experiments(r::Vector{Vector{Vector{Float64}}}, discount::Float64, labels, title)
+    time = length(r[1][1])
+    
+    # doesn't work
+    avg_r = [[mean([run[i] for run in exp]) for i in 1:time] for exp in r]
+    
+    disc_vector = [discount^i for i in 0:time-1]
+    discounted_avg_r = [elem .* disc_vector for elem in avg_r]
+    cumulative_discounted_avg_r = [cumsum(elem) for elem in discounted_avg_r]
+    
+    x = collect(1:time)
+    
+    plot(x, cumulative_discounted_avg_r, 
+        xlabel = "timestep",
+        ylabel = "reward",
+        title = title, 
+        labels=labels,
+        legend=:bottomright)
+end
+
+
 function calc_avg_r_multiple_experiments(r::Vector{Vector{Vector{Float64}}}, granularity::Int)
     n_exps = length(r)
     runs = length(r[1])
