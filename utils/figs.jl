@@ -16,6 +16,20 @@ function plot_avg_r_multiple_experiments(r::Vector{Vector{Vector{Float64}}}, gra
         labels=y_list)
 end
 
+function plot_avg_r_multiple_experiments_normalized(r::Vector{Vector{Any}}, granularity::Int, y_list, title)
+    avg_r = calc_avg_r_multiple_experiments(r, granularity)
+    avg_r_array = [avg_r[i,1,:] for i in 1:size(avg_r)[1]]
+    
+    x = collect(range(granularity, length(r[1][1]), floor(Int, length(r[1][1])/granularity)))
+    
+    plot(x, avg_r_array, 
+        ylims = (0,1.),
+        xlabel = "timestep",
+        ylabel = "reward",
+        title = title, 
+        labels=y_list)
+end
+
 function plot_avg_r_multiple_experiments(r::Vector{Vector{Vector{Float64}}}, granularity::Int, y_list, title, max::Float64)
     avg_r = calc_avg_r_multiple_experiments(r, granularity)
     avg_r_array = [avg_r[i,1,:] for i in 1:size(avg_r)[1]]
@@ -54,7 +68,7 @@ function plot_cumulative_avg_r_multiple_experiments(r::Vector{Vector{Vector{Floa
 end
 
 
-function calc_avg_r_multiple_experiments(r::Vector{Vector{Vector{Float64}}}, granularity::Int)
+function calc_avg_r_multiple_experiments(r::Vector{Vector{Any}}, granularity::Int)
     n_exps = length(r)
     runs = length(r[1])
     time = length(r[1][1])
@@ -207,6 +221,20 @@ function plot_proportion_actions_all(a, actions, window, title)
     labels = reshape(actions, 1, length(actions))
     plot(1:length(a[1]), avg_percent_action,
         ylims = (0,1.0),
+        ylabel = "% a ("*string(window)*" step window)" ,
+        labels = labels,
+        title = title,
+        xlabel = "timestep")
+end
+
+function plot_proportion_actions_B(a, actions, window, title)
+    avg_percent_action = Array{Array{Float64}}(undef, length(actions))
+    for i in 1:length(actions)
+        avg_percent_action[i] = get_proportion_actions_in_list_rolling(a, window, [actions[i]])
+    end
+    labels = reshape(actions, 1, length(actions))
+    plot(1:length(a[1]), avg_percent_action,
+        ylims = (0,0.08),
         ylabel = "% a ("*string(window)*" step window)" ,
         labels = labels,
         title = title,
