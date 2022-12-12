@@ -39,12 +39,12 @@ function get_optimal_arm(s::State)
     return "C"*string(max_arm), max_val
 end
 
-function get_star(expID::String, runs::Int)
+function get_star(expID::String, runs::Int, directory)
     lines = []
     run_lines = []
     for run in 1:runs
         run_lines = []
-        open("./sims/"*expID*"_run"*string(run)*".txt", "r") do file
+        open(directory*"/sims/"*expID*"_run"*string(run)*".txt", "r") do file
             for line in readlines(file)
                 push!(run_lines, line)
             end
@@ -175,9 +175,9 @@ function marginalize_across_d(beliefs::Array{ParticleCollection{State}})
     return u_probdicts
 end
 
-function import_experiment(expID::String, runs)
-    s, t, a, r = get_star(expID, runs)
-    beliefs = deserialize(open("./beliefs/"*expID*"_belief.txt", "r"))
+function import_experiment(expID::String, runs, directory=".")
+    s, t, a, r = get_star(expID, runs, directory)
+    beliefs = deserialize(open(directory*"/beliefs/"*expID*"_belief.txt", "r"))
     final_states = [mode(beliefs[run][end]) for run in 1:size(beliefs)[1]]
     avg_belief = get_avg_belief(beliefs)
     avg_belief_u = get_avg_belief_marginalized_across_d(beliefs)

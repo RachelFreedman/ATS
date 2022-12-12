@@ -68,6 +68,40 @@ function plot_cumulative_avg_r_multiple_experiments(r::Vector{Vector{Vector{Floa
 end
 
 
+function calc_avg_r_multiple_experiments(r::Vector{Vector{Vector{Float64}}}, granularity::Int)
+    n_exps = length(r)
+    runs = length(r[1])
+    time = length(r[1][1])
+    @assert time%granularity == 0
+    
+    points = floor(Int, time/granularity)
+    timesteps = zeros(points)
+    
+    r_avg_across_windows = zeros(n_exps, runs, points)
+    for exp in 1:n_exps
+        r_exp = r[exp]
+        @assert length(r_exp) == runs        
+        for run in 1:runs
+            r_run = r_exp[run]
+            @assert length(r_run) == time
+            for i in 1:points
+                
+                # calc average across window
+                en = i*granularity
+                st = en-(granularity-1)
+                avg_across_window = mean(r_run[st:en])
+
+                r_avg_across_windows[exp,run,i] = avg_across_window
+            end
+        end
+    end
+    
+    # calc average across runs
+    r_avg_across_windows_runs = mean(r_avg_across_windows, dims=2)
+    
+    return r_avg_across_windows_runs
+end
+
 function calc_avg_r_multiple_experiments(r::Vector{Vector{Any}}, granularity::Int)
     n_exps = length(r)
     runs = length(r[1])
