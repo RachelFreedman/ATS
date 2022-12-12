@@ -1,4 +1,4 @@
-# ARGS = [N, K, discount, u_grain, d_grain, exp_iters, exp_steps]
+# ARGS = [N, K, discount, u_grain, d_grain, exp_iters, exp_steps, state_index]
 
 using POMDPs, QuickPOMDPs, POMDPModelTools, POMDPPolicies, Parameters, Random, Plots, LinearAlgebra, POMDPTools, BasicPOMCP, D3Trees, GridInterpolations, POMCPOW, POMDPModels, Combinatorics, Dates, Serialization, ParticleFilters
 
@@ -17,14 +17,15 @@ log("Running experiment with ID "*expID)
 @with_kw struct MyParameters
     N::Int = parse(Int64, ARGS[1])           # size of item set
     K::Int = parse(Int64, ARGS[2])           # size of arm set
-    M::Int = 2                               # size of beta set
+    M::Int = 3                               # size of beta set
     y::Float64 = parse(Float64, ARGS[3])     # discount factor
     umax::Real = 10                          # max utility
     u_grain::Int = parse(Int64, ARGS[4])     # granularity of utility approximation
     d_grain::Int = parse(Int64, ARGS[5])     # granularity of arm distribution approximation
-    beta:: Array{Float64} = [0.01, 10.0]     # teacher beta values
+    beta:: Array{Float64} = [0., 0.01, 50.]     # teacher beta values
     exp_iters::Int = parse(Int64, ARGS[6])   # number of rollouts to run
     exp_steps::Int = parse(Int64, ARGS[7])   # number of timesteps per rollout
+    s_index::Int = parse(Int64, ARGS[8])     # index of true state
 end
 
 params = MyParameters()
@@ -215,7 +216,9 @@ iters = params.exp_iters
 
 # POMCPOW rollouts
 # hardcoded initial states
-initial_states = [State([0.0, 8.0, 10.0], Array{Float64}[[0.0, 0.0, 1.0], [0.6, 0.0, 0.4], [1.0, 0.0, 0.0]], [0.01, 10.0]) for i in 1:iters]
+init_s = S[params.s_index]
+log("hardcoded state: "*string(init_s))
+initial_states = [init_s for i in 1:iters]
 POMCPOW_R = Array{Float64}(undef, iters)
 beliefs = Array{Array{ParticleFilters.ParticleCollection{State}}}(undef, (iters, steps))
 for iter in 1:iters
@@ -255,22 +258,6 @@ end
 
 log("saved beliefs to "*"./beliefs/"*expID*"_belief.txt")
 
-# random rollouts
-prior = Uniform(S)
-sim = RolloutSimulator(max_steps=steps)
-
-random_R = zeros(iters)
-for iter in 1:iters
-    # use the same initial states as the POMCPOW runs
-    initial_state = initial_states[iter]
-    up = updater(RandomPolicy(pomdp))
-    result = simulate(sim, pomdp, RandomPolicy(pomdp), up, prior, initial_state)
-    random_R[iter] = result
-end
-
-log("ran "*string(iters)*" random rollouts for "*string(steps)*" timesteps each")
-log("Random R: "*string(random_R))
-
 # calculate maximum possible reward
 max_R = zeros(iters)
 
@@ -281,15 +268,3 @@ for iter in 1:iters
 end
 
 log("Max R: "*string(max_R))
-
-# plot figure
-fig = plot(1:iters, [random_R,POMCPOW_R], 
-    seriestype = :scatter, 
-    label=["random" "POMCP"], 
-    xticks = 0:1:iters,
-    xlabel = "run",
-    ylabel = "reward (" * string(steps) * " timesteps)",
-    ylims = (0,maximum(POMCPOW_R)*1.2)
-)
-savefig(fig,"./plots/reward_ID"*string(expID)*"_step"*string(steps)*"_roll"*string(iters)*".png")
-log("saved fig to ./plots/reward_ID"*string(expID)*"_step"*string(steps)*"_roll"*string(iters)*".png")

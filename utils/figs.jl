@@ -1,6 +1,6 @@
 module Figs
 
-using Plots, Statistics, NaNStatistics
+using Plots, Statistics, NaNStatistics, LinearAlgebra
 
 function plot_avg_r_multiple_experiments(r::Vector{Vector{Vector{Float64}}}, granularity::Int, y_list, title)
     avg_r = calc_avg_r_multiple_experiments(r, granularity)
@@ -16,7 +16,93 @@ function plot_avg_r_multiple_experiments(r::Vector{Vector{Vector{Float64}}}, gra
         labels=y_list)
 end
 
+function plot_avg_r_multiple_experiments_normalized(r::Vector{Vector{Any}}, granularity::Int, y_list, title)
+    avg_r = calc_avg_r_multiple_experiments(r, granularity)
+    avg_r_array = [avg_r[i,1,:] for i in 1:size(avg_r)[1]]
+    
+    x = collect(range(granularity, length(r[1][1]), floor(Int, length(r[1][1])/granularity)))
+    
+    plot(x, avg_r_array, 
+        ylims = (0,1.),
+        xlabel = "timestep",
+        ylabel = "reward",
+        title = title, 
+        labels=y_list)
+end
+
+function plot_avg_r_multiple_experiments(r::Vector{Vector{Vector{Float64}}}, granularity::Int, y_list, title, max::Float64)
+    avg_r = calc_avg_r_multiple_experiments(r, granularity)
+    avg_r_array = [avg_r[i,1,:] for i in 1:size(avg_r)[1]]
+    
+    x = collect(range(granularity, length(r[1][1]), floor(Int, length(r[1][1])/granularity)))
+    
+    plot(x, avg_r_array, 
+        ylims = (0,10),
+        xlabel = "timestep",
+        ylabel = "reward",
+        title = title, 
+        labels=y_list)
+
+    plot!(x, [max for i in x], 
+        labels="max")
+end
+
+function plot_cumulative_avg_r_multiple_experiments(r::Vector{Vector{Vector{Float64}}}, discount::Float64, labels, title)
+    time = length(r[1][1])
+    
+    # doesn't work
+    avg_r = [[mean([run[i] for run in exp]) for i in 1:time] for exp in r]
+    
+    disc_vector = [discount^i for i in 0:time-1]
+    discounted_avg_r = [elem .* disc_vector for elem in avg_r]
+    cumulative_discounted_avg_r = [cumsum(elem) for elem in discounted_avg_r]
+    
+    x = collect(1:time)
+    
+    plot(x, cumulative_discounted_avg_r, 
+        xlabel = "timestep",
+        ylabel = "reward",
+        title = title, 
+        labels=labels,
+        legend=:bottomright)
+end
+
+
 function calc_avg_r_multiple_experiments(r::Vector{Vector{Vector{Float64}}}, granularity::Int)
+    n_exps = length(r)
+    runs = length(r[1])
+    time = length(r[1][1])
+    @assert time%granularity == 0
+    
+    points = floor(Int, time/granularity)
+    timesteps = zeros(points)
+    
+    r_avg_across_windows = zeros(n_exps, runs, points)
+    for exp in 1:n_exps
+        r_exp = r[exp]
+        @assert length(r_exp) == runs        
+        for run in 1:runs
+            r_run = r_exp[run]
+            @assert length(r_run) == time
+            for i in 1:points
+                
+                # calc average across window
+                en = i*granularity
+                st = en-(granularity-1)
+                avg_across_window = mean(r_run[st:en])
+
+                r_avg_across_windows[exp,run,i] = avg_across_window
+            end
+        end
+    end
+    
+    # calc average across runs
+    r_avg_across_windows_runs = mean(r_avg_across_windows, dims=2)
+    
+    return r_avg_across_windows_runs
+end
+
+function calc_avg_r_multiple_experiments(r::Vector{Vector{Any}}, granularity::Int)
     n_exps = length(r)
     runs = length(r[1])
     time = length(r[1][1])
@@ -164,26 +250,39 @@ end
 function plot_proportion_actions_all(a, actions, window, title)
     avg_percent_action = Array{Array{Float64}}(undef, length(actions))
     for i in 1:length(actions)
-        avg_percent_action[i] = get_proportion_actions_in_list_rolling(a, 100, [actions[i]])
+        avg_percent_action[i] = get_proportion_actions_in_list_rolling(a, window, [actions[i]])
     end
+    labels = reshape(actions, 1, length(actions))
     plot(1:length(a[1]), avg_percent_action,
         ylims = (0,1.0),
         ylabel = "% a ("*string(window)*" step window)" ,
-        labels = ["C1" "C2" "C3" "B1" "B2"],
+        labels = labels,
         title = title,
         xlabel = "timestep")
 end
 
-function plot_proportion_high_B(a, gran::Int, y_labels, title)
+function plot_proportion_actions_B(a, actions, window, title)
+    avg_percent_action = Array{Array{Float64}}(undef, length(actions))
+    for i in 1:length(actions)
+        avg_percent_action[i] = get_proportion_actions_in_list_rolling(a, window, [actions[i]])
+    end
+    labels = reshape(actions, 1, length(actions))
+    plot(1:length(a[1]), avg_percent_action,
+        ylims = (0,0.08),
+        ylabel = "% a ("*string(window)*" step window)" ,
+        labels = labels,
+        title = title,
+        xlabel = "timestep")
+end
+
+function plot_proportion_high_B(a, gran::Int, y_labels, high_B, b_list, title)
     exps = length(a)
     runs = length(a[1])
     time = length(a[1][1])
     @assert time%gran == 0
-    
-    b_list = ["B1", "B2"]
-    
+        
     any_b = [[[arm in b_list for arm in a[exp][run]] for run in 1:runs] for exp in 1:exps]
-    high_b = [[[arm == "B2" for arm in a[exp][run]] for run in 1:runs] for exp in 1:exps]
+    high_b = [[[arm in high_B for arm in a[exp][run]] for run in 1:runs] for exp in 1:exps]
 
     n = floor(Int, time/gran)
     percent_high_B = zeros((exps, runs, n))

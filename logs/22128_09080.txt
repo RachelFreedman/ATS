@@ -1,0 +1,56 @@
+09:08:00	Running experiment with ID 22128_09080
+09:08:01	MyParameters
+  N: Int64 3
+  K: Int64 3
+  M: Int64 3
+  y: Float64 0.9
+  umax: Int64 10
+  u_grain: Int64 3
+  d_grain: Int64 3
+  beta: Array{Float64}((3,)) [0.0, 0.01, 50.0]
+  exp_iters: Int64 25
+  exp_steps: Int64 1000
+  s_index: Int64 4629
+
+09:08:01	generated 27 utilities (each length 3 items)
+09:08:01	generated 216 arm distribution sets (each shape 3 arms x 3 items)
+09:08:01	generated 1 beta value sets (each length 3 teachers)
+09:08:01	generated 5832 states
+09:08:02	generated 6 actions
+09:08:02	generated transition function
+09:08:02	generated reward function
+09:08:02	generated 21 observations
+09:08:02	generated observation function
+09:08:02	created POMDP
+09:08:02	solved POMDP
+09:08:02	saved policy to ./policies/22128_09080_policy.txt
+09:08:02	hardcoded state: State([10.0, 0.0, 5.0], Array{Float64}[[0.5, 0.0, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]], [0.0, 0.01, 50.0])
+09:08:03	logging POMCPOW simulation 1 to ./sims/22128_09080_run1.txt
+09:10:16	logging POMCPOW simulation 2 to ./sims/22128_09080_run2.txt
+09:12:26	logging POMCPOW simulation 3 to ./sims/22128_09080_run3.txt
+09:14:38	logging POMCPOW simulation 4 to ./sims/22128_09080_run4.txt
+09:16:50	logging POMCPOW simulation 5 to ./sims/22128_09080_run5.txt
+09:19:05	logging POMCPOW simulation 6 to ./sims/22128_09080_run6.txt
+09:21:19	logging POMCPOW simulation 7 to ./sims/22128_09080_run7.txt
+09:23:32	logging POMCPOW simulation 8 to ./sims/22128_09080_run8.txt
+09:25:48	logging POMCPOW simulation 9 to ./sims/22128_09080_run9.txt
+09:28:02	logging POMCPOW simulation 10 to ./sims/22128_09080_run10.txt
+09:30:16	logging POMCPOW simulation 11 to ./sims/22128_09080_run11.txt
+09:32:32	logging POMCPOW simulation 12 to ./sims/22128_09080_run12.txt
+09:34:45	logging POMCPOW simulation 13 to ./sims/22128_09080_run13.txt
+09:36:58	logging POMCPOW simulation 14 to ./sims/22128_09080_run14.txt
+09:39:11	logging POMCPOW simulation 15 to ./sims/22128_09080_run15.txt
+09:41:27	logging POMCPOW simulation 16 to ./sims/22128_09080_run16.txt
+09:43:40	logging POMCPOW simulation 17 to ./sims/22128_09080_run17.txt
+09:45:54	logging POMCPOW simulation 18 to ./sims/22128_09080_run18.txt
+09:48:08	logging POMCPOW simulation 19 to ./sims/22128_09080_run19.txt
+09:50:21	logging POMCPOW simulation 20 to ./sims/22128_09080_run20.txt
+09:52:37	logging POMCPOW simulation 21 to ./sims/22128_09080_run21.txt
+09:54:50	logging POMCPOW simulation 22 to ./sims/22128_09080_run22.txt
+09:57:06	logging POMCPOW simulation 23 to ./sims/22128_09080_run23.txt
+09:59:26	logging POMCPOW simulation 24 to ./sims/22128_09080_run24.txt
+10:01:31	logging POMCPOW simulation 25 to ./sims/22128_09080_run25.txt
+10:03:43	ran 25 POMCPOW rollouts for 1000 timesteps each
+10:03:43	POMCPOW R: [5850.0, 5922.5, 6090.0, 5870.0, 5507.5, 5800.0, 5760.0, 5747.5, 5705.0, 5887.5, 5690.0, 5892.5, 5835.0, 6465.0, 5717.5, 5952.5, 5880.0, 5712.5, 5907.5, 5382.5, 6045.0, 5480.0, 5477.5, 5277.5, 6065.0]
+10:05:34	saved beliefs to ./beliefs/22128_09080_belief.txt
+10:05:34	Max R: [7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0, 7500.0]

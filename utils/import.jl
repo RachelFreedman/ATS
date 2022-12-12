@@ -36,15 +36,15 @@ function get_optimal_arm(s::State)
             max_val = val_i
         end
     end
-    return "C"*string(max_arm)
+    return "C"*string(max_arm), max_val
 end
 
-function get_star(expID::String, runs::Int)
+function get_star(expID::String, runs::Int, directory)
     lines = []
     run_lines = []
     for run in 1:runs
         run_lines = []
-        open("./sims/"*expID*"_run"*string(run)*".txt", "r") do file
+        open(directory*"/sims/"*expID*"_run"*string(run)*".txt", "r") do file
             for line in readlines(file)
                 push!(run_lines, line)
             end
@@ -116,6 +116,21 @@ function get_avg_belief(beliefs::Matrix{Array{ParticleCollection{State}}})
     return avg_belief
 end 
 
+function get_avg_belief(beliefs)
+    runs = size(beliefs)[1]
+    final_states = [mode(beliefs[run][end]) for run in 1:runs]
+    final_state_belief = Array{Array{Float64}}(undef, runs)
+    for run in 1:runs
+        wt_run = Array{Float64}(undef, length(beliefs[run]))
+        for i in 1:length(beliefs[run])
+            wt_run[i] = pdf(beliefs[run][i], final_states[run])
+        end
+        final_state_belief[run] = wt_run
+    end
+    avg_belief = [mean([x[i] for x in final_state_belief]) for i in 1:length(final_state_belief[1])]
+    return avg_belief
+end 
+
 function get_avg_belief_marginalized_across_d(beliefs::Matrix{Array{ParticleCollection{State}}})
     runs = size(beliefs)[1]
     final_us = [mode(beliefs[run][end]).u for run in 1:runs]
@@ -160,9 +175,9 @@ function marginalize_across_d(beliefs::Array{ParticleCollection{State}})
     return u_probdicts
 end
 
-function import_experiment(expID::String, runs)
-    s, t, a, r = get_star(expID, runs)
-    beliefs = deserialize(open("./beliefs/"*expID*"_belief.txt", "r"))
+function import_experiment(expID::String, runs, directory=".")
+    s, t, a, r = get_star(expID, runs, directory)
+    beliefs = deserialize(open(directory*"/beliefs/"*expID*"_belief.txt", "r"))
     final_states = [mode(beliefs[run][end]) for run in 1:size(beliefs)[1]]
     avg_belief = get_avg_belief(beliefs)
     avg_belief_u = get_avg_belief_marginalized_across_d(beliefs)

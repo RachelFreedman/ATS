@@ -1,0 +1,40 @@
+21:27:58	Running experiment with ID base_rand_B_22127_212758
+21:27:58	generated 27 utilities (each length 3 items)
+21:27:58	generated 216 arm distribution sets (each shape 3 arms x 3 items)
+21:27:58	generated 1 beta value sets (each length 3 teachers)
+21:27:58	generated 5832 states
+21:27:58	generated 4 actions
+21:27:58	generated transition function
+21:27:58	generated reward function
+21:27:58	generated 21 observations
+21:27:58	generated observation function
+21:27:58	created POMDP
+21:27:58	solved POMDP
+21:27:58	true state State([5.0, 0.0, 10.0], Array{Float64}[[0.5, 0.0, 0.5], [0.0, 0.5, 0.5], [0.0, 0.5, 0.5]], [0.0, 0.01, 50.0])
+21:27:58	logging random teacher simulation 1 to ./sims/base_rand_B_22127_212758_run1.txt
+21:29:16	logging random teacher simulation 2 to ./sims/base_rand_B_22127_212758_run2.txt
+21:30:36	logging random teacher simulation 3 to ./sims/base_rand_B_22127_212758_run3.txt
+21:31:56	logging random teacher simulation 4 to ./sims/base_rand_B_22127_212758_run4.txt
+21:33:17	logging random teacher simulation 5 to ./sims/base_rand_B_22127_212758_run5.txt
+21:34:37	logging random teacher simulation 6 to ./sims/base_rand_B_22127_212758_run6.txt
+21:35:57	logging random teacher simulation 7 to ./sims/base_rand_B_22127_212758_run7.txt
+21:37:17	logging random teacher simulation 8 to ./sims/base_rand_B_22127_212758_run8.txt
+21:38:39	logging random teacher simulation 9 to ./sims/base_rand_B_22127_212758_run9.txt
+21:40:00	logging random teacher simulation 10 to ./sims/base_rand_B_22127_212758_run10.txt
+21:41:22	logging random teacher simulation 11 to ./sims/base_rand_B_22127_212758_run11.txt
+21:42:45	logging random teacher simulation 12 to ./sims/base_rand_B_22127_212758_run12.txt
+21:44:02	logging random teacher simulation 13 to ./sims/base_rand_B_22127_212758_run13.txt
+21:45:24	logging random teacher simulation 14 to ./sims/base_rand_B_22127_212758_run14.txt
+21:46:47	logging random teacher simulation 15 to ./sims/base_rand_B_22127_212758_run15.txt
+21:48:08	logging random teacher simulation 16 to ./sims/base_rand_B_22127_212758_run16.txt
+21:49:29	logging random teacher simulation 17 to ./sims/base_rand_B_22127_212758_run17.txt
+21:50:50	logging random teacher simulation 18 to ./sims/base_rand_B_22127_212758_run18.txt
+21:52:12	logging random teacher simulation 19 to ./sims/base_rand_B_22127_212758_run19.txt
+21:53:28	logging random teacher simulation 20 to ./sims/base_rand_B_22127_212758_run20.txt
+21:54:52	logging random teacher simulation 21 to ./sims/base_rand_B_22127_212758_run21.txt
+21:56:16	logging random teacher simulation 22 to ./sims/base_rand_B_22127_212758_run22.txt
+21:57:39	logging random teacher simulation 23 to ./sims/base_rand_B_22127_212758_run23.txt
+21:59:04	logging random teacher simulation 24 to ./sims/base_rand_B_22127_212758_run24.txt
+22:00:30	logging random teacher simulation 25 to ./sims/base_rand_B_22127_212758_run25.txt
+22:01:55	ran 25 random teacher rollouts for 1000 timesteps each
+22:01:55	POMCPOW + random teacher selection R: [5727.5, 5550.0, 5752.5, 5520.0, 5392.5, 5560.0, 5542.5, 5655.0, 5615.0, 5535.0, 5510.0, 5872.5, 5447.5, 5550.0, 5535.0, 5407.5, 5642.5, 5395.0, 6532.5, 6167.5, 5715.0, 5717.5, 5737.5, 5517.5, 5630.0]
