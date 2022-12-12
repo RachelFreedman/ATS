@@ -1,0 +1,52 @@
+22:02:10	Running experiment with ID base_rand_act_22127_220210
+22:02:10	MyParameters
+  N: Int64 3
+  K: Int64 3
+  M: Int64 3
+  y: Float64 0.9
+  umax: Int64 10
+  u_grain: Int64 3
+  d_grain: Int64 3
+  beta: Array{Float64}((3,)) [0.0, 0.01, 50.0]
+  exp_iters: Int64 25
+  exp_steps: Int64 1000
+  s_index: Int64 1245
+
+22:02:10	generated 27 utilities (each length 3 items)
+22:02:11	generated 216 arm distribution sets (each shape 3 arms x 3 items)
+22:02:11	generated 1 beta value sets (each length 3 teachers)
+22:02:11	generated 5832 states
+22:02:11	generated 6 actions
+22:02:11	generated transition function
+22:02:11	generated reward function
+22:02:11	generated 21 observations
+22:02:11	generated observation function
+22:02:11	created POMDP
+22:02:12	true state State([10.0, 0.0, 0.0], Array{Float64}[[0.5, 0.5, 0.0], [0.0, 0.5, 0.5], [0.0, 0.5, 0.5]], [0.0, 0.01, 50.0])
+22:02:12	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run1.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run2.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run3.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run4.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run5.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run6.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run7.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run8.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run9.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run10.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run11.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run12.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run13.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run14.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run15.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run16.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run17.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run18.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run19.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run20.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run21.txt
+22:02:13	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run22.txt
+22:02:14	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run23.txt
+22:02:14	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run24.txt
+22:02:14	logging random action simulation 25 to ./sims/base_rand_act_22127_220210_run25.txt
+22:02:14	ran 25 random rollouts for 1000 timesteps each
+22:02:14	Random R: [800.0, 840.0, 785.0, 775.0, 855.0, 825.0, 960.0, 890.0, 805.0, 875.0, 915.0, 860.0, 850.0, 815.0, 765.0, 925.0, 840.0, 830.0, 825.0, 820.0, 785.0, 885.0, 935.0, 790.0, 880.0]
