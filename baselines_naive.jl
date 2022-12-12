@@ -32,9 +32,9 @@ params = MyParameters()
 log(string(params))
 
 # baseline-specific parameters
-t_explore = 200
+t_explore = 100
 log("will explore for first "*string(t_explore)*" timesteps")
-teacher = 2
+teacher = 3
 log("will estimate based on feedback from teacher "*string(teacher)*" with beta "*string(params.beta[teacher]))
 
 struct State
