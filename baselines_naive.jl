@@ -27,15 +27,15 @@ log("Running experiment with ID " * expID)
     exp_iters::Int = parse(Int64, ARGS[6])   # number of rollouts to run
     exp_steps::Int = parse(Int64, ARGS[7])   # number of timesteps per rollout
     s_index::Int = parse(Int64, ARGS[8])     # index of true state
+    t_explore::Int = parse(Int64, ARGS[9])   # number of timesteps to explore
+    teacher::Int = parse(Int64, ARGS[10])    # which teacher to query
 end
 params = MyParameters()
 log(string(params))
 
 # baseline-specific parameters
-t_explore = 100
-log("will explore for first "*string(t_explore)*" timesteps")
-teacher = 3
-log("will estimate based on feedback from teacher "*string(teacher)*" with beta "*string(params.beta[teacher]))
+log("will explore for first "*string(params.t_explore)*" timesteps")
+log("will estimate based on feedback from teacher "*string(params.teacher)*" with beta "*string(params.beta[params.teacher]))
 
 struct State
     u::Array{Float64}         # list of N utility values for N items
@@ -340,7 +340,7 @@ for iter in 1:params.exp_iters
         write(file, string(true_state))
     end
     r_accum = 0.
-    for t in 1:t_explore
+    for t in 1:params.t_explore
         msg = ""
         if rand(Bool)
             # select arm
@@ -381,9 +381,9 @@ for iter in 1:params.exp_iters
         end
     end
     
-    log("estimating U using teacher "*string(teacher)*" with beta "*string(params.beta[teacher]))
+    log("estimating U using teacher "*string(params.teacher)*" with beta "*string(params.beta[params.teacher]))
     
-    u_est = estimate_u(as, os, teacher, params.M, params.N, params.beta, params.umax)
+    u_est = estimate_u(as, os, params.teacher, params.M, params.N, params.beta, params.umax)
     d_est = estimate_d(as, os, params.K, params.N)
     max_a, max_val = calc_max_arm(u_est, d_est)
     
@@ -392,7 +392,7 @@ for iter in 1:params.exp_iters
     log("given U and D estimates, highest-reward arm is arm "*string(max_a)*" with reward "*string(max_val))
     
     a = Action("C"*string(max_a), false, max_a)
-    for t in t_explore+1:params.exp_steps
+    for t in params.t_explore+1:params.exp_steps
         item = pull_arm(a.index, true_state)
         o = Observation(true, item, invalid_p)
         r = R(true_state, a)
