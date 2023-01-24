@@ -50,7 +50,6 @@ end
 function plot_cumulative_avg_r_multiple_experiments(r::Vector{Vector{Vector{Float64}}}, discount::Float64, labels, title)
     time = length(r[1][1])
     
-    # doesn't work
     avg_r = [[mean([run[i] for run in exp]) for i in 1:time] for exp in r]
     
     disc_vector = [discount^i for i in 0:time-1]
@@ -312,4 +311,63 @@ function plot_proportion_high_B(a, gran::Int, y_labels, high_B, b_list, title)
         xlabel = "timestep")
     end
 
+function plot_num_teacher_queries(a, y_labels, title)
+    T = length(a[1][1])
+    queries = [[[run[t][1]=='B' for t in 1:T] for run in exp] for exp in a]
+    queries_sum = [[sum(run, dims=1)[1] for run in exp] for exp in queries]
+    queries_sum_avg = [mean(exp) for exp in queries_sum]
+    queries_sum_std = [std(exp) for exp in queries_sum]
+
+    bar(vec(labels), queries_sum_avg,
+        yerr = queries_sum_std,
+        xlabel = "algorithm",
+        ylabel = "teacher queries",
+        title = title,
+        legend = false)
+end
+
+function plot_final_reward_frequency(r, s, runs, trail=100)
+    avg = [mean(exp[end-(trail-1):end]) for exp in r]
+    max_vec = zeros(size(r))
+    for i in 1:size(s)[1]
+        max_vec[(i-1)*runs+1:(i)*runs] .= maximum([dot(s[i].u, d) for d in s[i].d])
+    end
+    scaled = avg./max_vec
+    histogram(scaled,
+        xlabel= "scaled reward",
+        ylabel= "frequency",
+        title= "scaled reward of run (averaged over final "*string(trail)*" steps)",
+        legend= false)
+end
+
+function plot_inferred_state_loss(final_states, s)
+    u_err = []
+    d_err = []
+    ud_err = []
+    s_true = repeat(s, inner=size(final_states)[1])
+    for i in 1:size(final_states)[1]
+        u_diff = s_true[1].u .- final_states[i].u
+        append!(u_err, norm(u_diff))
+        d_diff = s_true[1].d .- final_states[i].d
+        for d in d_diff
+            append!(d_err, norm(d)) 
+        end
+        ud_diff = [dot(s_true[1].u, d) for d in s_true[1].d] .- [dot(final_states[i].u, d) for d in final_states[i].d]
+        for ud in ud_diff
+            append!(ud_err, norm(ud)) 
+        end
+    end
+
+    u_avg = mean(u_err)
+    u_std = std(u_err)
+    d_avg = mean(d_err)
+    d_std = std(d_err)
+    ud_avg = mean(ud_err)
+    ud_std = std(ud_err)
+
+    bar(["item utilities", "expected arm utilities", "arm distributions"], [u_avg, ud_avg, d_avg],
+        yerr = [u_std, d_std, ud_std],
+        title = "avg L2 loss",
+        legend = false)
+end
 end

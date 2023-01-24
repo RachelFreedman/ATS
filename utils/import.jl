@@ -175,13 +175,12 @@ function marginalize_across_d(beliefs::Array{ParticleCollection{State}})
     return u_probdicts
 end
 
-function import_experiment(expID::String, runs, directory=".")
+function import_experiment(expID::String, runs, directory="..")
     s, t, a, r = get_star(expID, runs, directory)
     beliefs = deserialize(open(directory*"/beliefs/"*expID*"_belief.txt", "r"))
     final_states = [mode(beliefs[run][end]) for run in 1:size(beliefs)[1]]
     avg_belief = get_avg_belief(beliefs)
-    avg_belief_u = get_avg_belief_marginalized_across_d(beliefs)
-    return s, t, a, r, beliefs, final_states, avg_belief, avg_belief_u
+    return s, t, a, r, beliefs, final_states, avg_belief
 end
 
 function import_IDs(IDs::Vector{String}, runs::Int)
