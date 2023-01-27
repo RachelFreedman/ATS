@@ -63,7 +63,7 @@ function plot_cumulative_avg_r_multiple_experiments(r::Vector{Vector{Vector{Floa
         ylabel = "reward",
         title = title, 
         labels=labels,
-        legend=:bottomright)
+        legend=:topleft)
 end
 
 
@@ -311,7 +311,7 @@ function plot_proportion_high_B(a, gran::Int, y_labels, high_B, b_list, title)
         xlabel = "timestep")
     end
 
-function plot_num_teacher_queries(a, y_labels, title)
+function plot_num_teacher_queries(a, labels, title)
     T = length(a[1][1])
     queries = [[[run[t][1]=='B' for t in 1:T] for run in exp] for exp in a]
     queries_sum = [[sum(run, dims=1)[1] for run in exp] for exp in queries]
