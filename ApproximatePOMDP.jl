@@ -154,7 +154,7 @@ omega = union(I_obs, P_obs)
 log("generated "*string(length(omega))*" observations")
 
 # unnormalized query profile (likelihood of querying 1,1; 2,1; 3,1; ... ; N,1; 1,2; 2,2; ... ; N,N)
-Q = ones(params.N*params.N)
+Q = [o.p.i0 != o.p.i1 for o in P_obs]
 
 # preference probability (expected preference, or probability that preference=1)
 function Pr(p::Preference, s::State, b::Float64)
@@ -170,7 +170,7 @@ function O(s::State, a::Action, sp::State)
     # if B action, obs in P_obs
     if a.isBeta
         prob_of_pref = [Pr(o.p, s, s.b[a.index]) for o in P_obs]
-        prob_of_query = vcat(Q,Q)   # doubled because each query appears once for each label
+        prob_of_query = Q
         
         # weight by querying profile to get dist
         dist = [prob_of_pref[i]*prob_of_query[i] for i in 1:length(prob_of_pref)]

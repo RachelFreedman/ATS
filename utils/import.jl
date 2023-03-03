@@ -183,13 +183,13 @@ function import_experiment(expID::String, runs, directory="..")
     return s, t, a, r, beliefs, final_states, avg_belief
 end
 
-function import_IDs(IDs::Vector{String}, runs::Int)
+function import_IDs(IDs::Vector{String}, runs::Int; directory="..")
     s = Vector{Any}()
     t = Vector{Vector{Any}}()
     a = Vector{Vector{Any}}()
     r = Vector{Vector{Float64}}()
     for id in IDs
-        s_, t_, a_, r_ = get_star(id, runs, "..")
+        s_, t_, a_, r_ = get_star(id, runs, directory)
         push!(s, s_[1])
         append!(a, a_)
         append!(r, r_)
