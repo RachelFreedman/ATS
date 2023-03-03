@@ -192,6 +192,36 @@ function plot_proportion_actions_in_list(a::Vector{Vector{SubString{String}}}, a
         legend = false,
         title = "actions, y="*string(y)*" (exp "*expID*", "*string(runs)*" runs)")
 end
+
+function plot_proportion_actions_in_list(a::Vector{Vector{Any}}, a_list::Array{String}, gran::Int, y, expID, runs)
+    @assert length(a[1])%gran == 0
+    
+    valid_a = [[arm in a_list for arm in a[i]] for i in 1:runs]
+    
+    n = floor(Int, length(a[1])/gran)
+    timesteps = zeros(n)
+    percent_valid = zeros((runs, n))
+    for i in 1:n
+        f = i*gran
+        s = f-(gran-1)
+        timesteps[i] = i*gran
+        for run in 1:runs
+            percent_valid[run,i] = mean(valid_a[run][s:f])
+        end
+    end
+    
+    avg_percent_valid = [mean(percent_valid[:,i]) for i in 1:n]
+    sd_percent_valid = [std(percent_valid[:,i]) for i in 1:n]
+    
+    # plot percent valid actions v. timestep
+    plot(timesteps, avg_percent_valid,
+        ribbon = sd_percent_valid,
+        ylims = (0,1.2),
+        ylabel = "% a in "*string(a_list)*" ("*string(gran)*" steps)" ,
+        xlabel = "timestep",
+        legend = false,
+        title = "actions, y="*string(y)*" (exp "*expID*", "*string(runs)*" runs)")
+end
                     
 function plot_proportion_actions_in_list_rolling(a, a_list::Array{String}, window::Int, y, expID)
     runs = length(a)
