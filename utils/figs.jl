@@ -48,7 +48,7 @@ function plot_avg_r_multiple_experiments(r::Vector{Vector{Vector{Float64}}}, gra
 end
 
 function plot_cumulative_avg_r_multiple_experiments(r::Vector{Vector{Vector{Float64}}}, discount::Float64, labels, title)
-    time = length(r[1][1])
+    time = minimum([length(x[1]) for x in r])
     
     avg_r = [[mean([run[i] for run in exp]) for i in 1:time] for exp in r]
     

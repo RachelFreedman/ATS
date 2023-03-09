@@ -199,7 +199,7 @@ pomdp = QuickPOMDP(MyPOMDP,
 log("created POMDP")
 
 # solve POMDP with POMCPOW
-solver = POMCPOWSolver()
+solver = POMCPOWSolver(max_depth=5)
 planner = solve(solver, pomdp);
 log("solved POMDP")
 
