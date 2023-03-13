@@ -1,0 +1,8 @@
+policies/
+sims/
+logs/
+plots/
+beliefs/
+*-checkpoint.ipynb
+fig/
+*.DS_Store
