@@ -5,25 +5,33 @@ using LinearAlgebra, Serialization, Statistics, ParticleFilters
 export State
 
 struct State
+    t::Int                    # timesteps remaining
     u::Array{Float64}         # list of N utility values for N items
     d::Array{Array{Float64}}  # list of K arm distributions, each assigning probabilities to N items
     b::Array{Float64}         # list of M beta values
 end
 
 function parse_state(s::String)
+    x = match(r"State\((\d+),", s)
+    if !isnothing(x)
+        T = parse(Int, x.captures[1])
+    else
+        T = -1
+    end
+    
     sp = split(s, ['{', '}'])
 
     u_str = split(sp[1], ['[', ']'])[2]
-    u = [parse(Float64, x) for x in split(u_str, ", ")]
+    U = [parse(Float64, x) for x in split(u_str, ", ")]
 
     spsp = split(sp[3], ['[', ']'])
     d_str = [spsp[3], spsp[5], spsp[7]]
-    d = [[parse(Float64, x) for x in split(elem, ", ")] for elem in d_str]
+    D = [[parse(Float64, x) for x in split(elem, ", ")] for elem in d_str]
 
     b_str = spsp[10]
-    b = [parse(Float64, x) for x in split(b_str, ", ")]
+    B = [parse(Float64, x) for x in split(b_str, ", ")]
 
-    return State(u,d,b)
+    return State(T, U, D, B)
 end
 
 function get_optimal_arm(s::State)

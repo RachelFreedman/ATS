@@ -32,7 +32,6 @@ params = MyParameters()
 log(string(params))
 
 struct State
-    t::Int                    # timesteps remaining
     u::Array{Float64}         # list of N utility values for N items
     d::Array{Array{Float64}}  # list of K arm distributions, each assigning probabilities to N items
     b::Array{Float64}         # list of M beta values
@@ -86,17 +85,10 @@ B = [params.beta]
 log("generated "*string(length(B))*" beta value sets (each length "*string(length(B[1]))*" teachers)")
 
 # State space
-S = [[State(t,u,d,b) for u in U, d in D, b in B, t in params.exp_steps:-1:1]...,]
+S = [[State(u,d,b) for u in U, d in D, b in B]...,]
 
-# absorbing state
-final = State(0, zeros(params.N), [zeros(params.N) for _ in 1:params.K], zeros(params.M))
-push!(S, final)
+log("generated "*string(length(S))*" states")
 
-# initial states
-S_init = S[1:length(U)*length(D)*length(B)]
-
-log("generated "*string(length(S))*" states, "*string(length(S_init))*" of which are potential start states")
- 
 # Action space - actions are arm choices (K) or beta selections (M)
 struct Action
     name::String      # valid names are {B,C} + index
@@ -115,27 +107,13 @@ end
 log("generated "*string(length(A))*" actions")
 
 # Transition function
-function next(s::State)
-    # after final timestep, transition to absorbing state
-    if s.t <= 1
-        return S[end]
-    end
-    # otherwise decrement t and preserve rest of state
-    return State(s.t-1, s.u, s.d, s.b)
-end
-
 function T(s::State, a::Action)
-    s_prime = next(s)
-    return SparseCat([s_prime], [1.0])    # deterministic categorical distribution
+    return SparseCat([s], [1.0])    # categorical distribution
 end
 log("generated transition function")
 
 # Reward function
 function R(s::State, a::Action)
-    # if absorbing state, return 0
-    if s.t == 0
-        return 0
-    end
     # if beta selected, return 0
     if a.isBeta
         return 0
@@ -189,11 +167,6 @@ function Pr(p::Preference, s::State, b::Float64)
 end
 
 function O(s::State, a::Action, sp::State)
-    # if absorbing state, return meaningless observation
-    if sp.t == 0
-        return SparseCat([Observation(false, invalid_i, invalid_p)], [1.])
-    end    
-    
     # if B action, obs in P_obs
     if a.isBeta
         prob_of_pref = [Pr(o.p, s, s.b[a.index]) for o in P_obs]
@@ -221,7 +194,7 @@ pomdp = QuickPOMDP(MyPOMDP,
     observation  = O,
     reward       = R,
     discount     = params.y,
-    initialstate = S_init);
+    initialstate = S);
 
 log("created POMDP")
 

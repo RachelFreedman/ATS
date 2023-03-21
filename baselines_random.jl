@@ -423,9 +423,10 @@ pomdp = QuickPOMDP(MyPOMDP,
 
 log("created POMDP")
 
-solver = POMCPOWSolver(max_depth=5)
+max_depth=5
+solver = POMCPOWSolver(max_depth=max_depth)
 planner = solve(solver, pomdp);
-log("solved POMDP")
+log("solved POMDP using POMCPOW with max search depth "*string(max_depth))
 
 true_state = S[params.s_index]
 log("true state "*string(true_state))
