@@ -196,7 +196,7 @@ function O(s::State, a::Action, sp::State)
     
     # if B action, obs in P_obs
     if a.isBeta
-        prob_of_pref = [Pr(o.p, s, s.b[a.index]) for o in P_obs]
+        prob_of_pref = [Pr(o.p, sp, sp.b[a.index]) for o in P_obs]
         prob_of_query = Q
         
         # weight by querying profile to get dist
@@ -205,7 +205,7 @@ function O(s::State, a::Action, sp::State)
         return SparseCat(P_obs, normalized_dist)
     # if C action, obs in I_obs
     else
-        return SparseCat(I_obs, s.d[a.index])
+        return SparseCat(I_obs, sp.d[a.index])
     end
 end
 
