@@ -30,11 +30,15 @@ ConstrainedRandomPolicy(problem::Union{POMDP,MDP},
 
 ## policy execution ##
 function action(policy::ConstrainedRandomPolicy, s)
-    return rand(policy.rng, policy.actions)
+    a= rand(policy.rng, policy.actions)
+    print(a)
+    return a
 end
 
 function action(policy::ConstrainedRandomPolicy, b::Nothing)
-    return rand(policy.rng, policy.actions)
+    a= rand(policy.rng, policy.actions)
+    print(a)
+    return a
 end
 
 ## convenience functions ##
