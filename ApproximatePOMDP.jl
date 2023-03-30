@@ -1,6 +1,11 @@
 # ARGS = [N, K, discount, u_grain, d_grain, exp_iters, exp_steps, state_index]
 
-using POMDPs, QuickPOMDPs, POMDPModelTools, POMDPPolicies, Parameters, Random, Plots, LinearAlgebra, POMDPTools, BasicPOMCP, D3Trees, GridInterpolations, POMCPOW, POMDPModels, Combinatorics, Dates, Serialization, ParticleFilters
+using POMDPs, QuickPOMDPs, POMDPModelTools, POMDPPolicies, Parameters, Random, Plots, LinearAlgebra, POMDPTools, BasicPOMCP, D3Trees, GridInterpolations, POMDPModels, Combinatorics, Dates, Serialization, ParticleFilters
+
+include("./POMCPOW_custom/src/POMCPOW.jl")
+import .POMCPOW
+include("./POMCPOW_custom/src/Solvers.jl")
+import .Solvers
 
 expID = Dates.format(Dates.now(), "yymd_HHMMS")
 
@@ -26,6 +31,7 @@ log("Running experiment with ID "*expID)
     exp_iters::Int = parse(Int64, ARGS[6])   # number of rollouts to run
     exp_steps::Int = parse(Int64, ARGS[7])   # number of timesteps per rollout
     s_index::Int = parse(Int64, ARGS[8])     # index of true state
+    max_depth::Int = parse(Int64, ARGS[9])     # index of true state
 end
 
 params = MyParameters()
@@ -226,10 +232,9 @@ pomdp = QuickPOMDP(MyPOMDP,
 log("created POMDP")
 
 # solve POMDP with POMCPOW
-max_depth=5
-solver = POMCPOWSolver(max_depth=max_depth)
+solver = POMCPOW.POMCPOWSolver(max_depth=params.max_depth, estimate_value=RolloutEstimator(Solvers.ConstrainedRandomSolver(actions(pomdp)[1:params.K])))
 planner = solve(solver, pomdp);
-log("solved POMDP using POMCPOW with max search depth "*string(max_depth))
+log("solved POMDP using POMCPOW with max search depth "*string(params.max_depth))
 
 # save serialized planner
 open("./policies/"*expID*"_policy.txt", "w") do file
@@ -241,6 +246,7 @@ log("saved policy to "*"./policies/"*expID*"_policy.txt")
 # simulate rollouts
 steps = params.exp_steps
 iters = params.exp_iters
+prior = Uniform(S_init)
 
 # POMCPOW rollouts
 # hardcoded initial states
@@ -254,7 +260,7 @@ for iter in 1:iters
     t = 1
     r_accum = 0.
     beliefs_iter = Array{ParticleFilters.ParticleCollection{State}}(undef, steps)
-    for (s, a, o, r, b) in stepthrough(pomdp, planner, updater(planner), Uniform(S), initial_states[iter], "s,a,o,r,b", max_steps=steps)
+    for (s, a, o, r, b) in stepthrough(pomdp, planner, updater(planner), prior, initial_states[iter], "s,a,o,r,b", max_steps=steps)
         r_accum = r_accum + r
         beliefs_iter[t] = b
         if t == 1

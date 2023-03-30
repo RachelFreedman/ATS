@@ -19,23 +19,23 @@
 # julia baselines_random.jl 3 3 0.9 3 3 25 1000 4151
 # julia baselines_random.jl 3 3 0.9 3 3 25 1000 4426
 
-julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 1217
-julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 1226
-julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 1235
-julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 1245
-julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 4586
-julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 4589
-julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 4629
-julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 4638
-julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 4641
-julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 1572
-# julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 1712
-# julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 3191
-# julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 3204
-# julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 3437
-# julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 3446
-# julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 3514
-# julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 3526
-# julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 3616
-# julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 4151
-# julia ApproximatePOMDP.jl 3 3 0.9 3 3 5 100 4426
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 1217 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 1226 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 1235 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 1245 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 4586 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 4589 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 4629 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 4638 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 4641 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 1572 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 1712 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 3191 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 3204 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 3437 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 3446 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 3514 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 3526 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 3616 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 4151 100
+julia ApproximatePOMDP.jl 3 3 1. 3 3 25 100 4426 100

@@ -247,13 +247,13 @@ end
 
 function plot_actions_in_list_rolling_multiple_experiments(a, a_list::Array{String}, window::Int, labels, title::String)
     exps = length(a)
-    runs = length(a[1])
-    time = length(a[1][1])
+    runs = minimum([length(x) for x in a])
+    time = minimum([length(x[1]) for x in a])
     @assert time/window >= 2
     
     a_prop = Array{Vector{Float64}}(undef, exps)
     for exp in 1:exps
-        a_prop[exp] = get_proportion_actions_in_list_rolling(a[exp], window, a_list)
+        a_prop[exp] = get_proportion_actions_in_list_rolling(a[exp], window, a_list, runs, time)
     end
     
     plot(collect(1:time), a_prop,
@@ -267,6 +267,16 @@ end
 function get_proportion_actions_in_list_rolling(a, window::Int, a_list::Array{String})
     runs = length(a)
     time = length(a[1])
+    @assert time/window >= 2
+    
+    valid_a = [[arm in a_list for arm in a[i]] for i in 1:runs]
+    avg_valid_a = [mean([x[i] for x in valid_a]) for i in 1:time]    
+    avg_moving_window_percent_valid = [i < window ? mean(avg_valid_a[begin:i]) : mean(avg_valid_a[i-window+1:i]) for i in 1:length(avg_valid_a)]
+
+    return avg_moving_window_percent_valid
+end
+
+function get_proportion_actions_in_list_rolling(a, window::Int, a_list::Array{String}, runs, time)
     @assert time/window >= 2
     
     valid_a = [[arm in a_list for arm in a[i]] for i in 1:runs]

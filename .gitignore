@@ -6,3 +6,4 @@ beliefs/
 *-checkpoint.ipynb
 fig/
 *.DS_Store
+log.txt
