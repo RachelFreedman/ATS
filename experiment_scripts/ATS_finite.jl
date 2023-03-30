@@ -1,44 +1,57 @@
-# ARGS = [N, K, discount, u_grain, d_grain, exp_iters, exp_steps, state_index]
+#= 
+Run experiments using active teacher selection on a finite-horizon, undiscounted POMDP.
+to run:
+    julia ATS_finite.jl test_boolean num_items num_arms utility_granularity arm_granularity num_runs run_length state_index max_depth seed
+=#
+
+include("../modified_POMCPOW/src/POMCPOW.jl")
+include("../modified_POMCPOW/src/Solvers.jl")
+
+import .POMCPOW
+import .Solvers
 
 using POMDPs, QuickPOMDPs, POMDPModelTools, POMDPPolicies, Parameters, Random, Plots, LinearAlgebra, POMDPTools, BasicPOMCP, D3Trees, GridInterpolations, POMDPModels, Combinatorics, Dates, Serialization, ParticleFilters
 
-include("./POMCPOW_custom/src/POMCPOW.jl")
-import .POMCPOW
-include("./POMCPOW_custom/src/Solvers.jl")
-import .Solvers
-
+TEST = ARGS[1] == "true"
 expID = Dates.format(Dates.now(), "yymd_HHMMS")
 
 function log(s::String)
-    s_time = Dates.format(Dates.now(), "HH:MM:SS\t")*s*"\n"
-    open("./logs/"*expID*".txt", "a") do file
-        write(file, s_time)
+    if !TEST
+        s_time = Dates.format(Dates.now(), "HH:MM:SS\t")*s*"\n"
+        open("./logs/"*expID*".txt", "a") do file
+            write(file, s_time)
+        end
+        print(s_time)
     end
-    print(s_time)
 end
 
 log("Running experiment with ID "*expID)
 
 @with_kw struct MyParameters
-    N::Int = parse(Int64, ARGS[1])           # size of item set
-    K::Int = parse(Int64, ARGS[2])           # size of arm set
+    N::Int = parse(Int64, ARGS[2])           # size of item set
+    K::Int = parse(Int64, ARGS[3])           # size of arm set
     M::Int = 3                               # size of beta set
-    y::Float64 = parse(Float64, ARGS[3])     # discount factor
+    y::Float64 = 1.                          # discount factor
     umax::Real = 10                          # max utility
     u_grain::Int = parse(Int64, ARGS[4])     # granularity of utility approximation
     d_grain::Int = parse(Int64, ARGS[5])     # granularity of arm distribution approximation
-    beta:: Array{Float64} = [0., 0.01, 50.]     # teacher beta values
+    beta:: Array{Float64} = [0., 0.01, 50.]  # teacher beta values
     exp_iters::Int = parse(Int64, ARGS[6])   # number of rollouts to run
     exp_steps::Int = parse(Int64, ARGS[7])   # number of timesteps per rollout
     s_index::Int = parse(Int64, ARGS[8])     # index of true state
-    max_depth::Int = parse(Int64, ARGS[9])     # index of true state
+    max_depth::Int = parse(Int64, ARGS[9])   # index of true state
+    seed::Int = parse(Int64, ARGS[10])
 end
 
 params = MyParameters()
 log(string(params))
 
+RNG1 = Random.seed!(params.seed)
+RNG2 = Random.seed!(params.seed+1)
+RNG3 = Random.seed!(params.seed+1)
+
 struct State
-    t::Int                    # timesteps remaining
+    t::Int                    # timesteps remaining before end of run
     u::Array{Float64}         # list of N utility values for N items
     d::Array{Array{Float64}}  # list of K arm distributions, each assigning probabilities to N items
     b::Array{Float64}         # list of M beta values
@@ -195,7 +208,7 @@ function Pr(p::Preference, s::State, b::Float64)
 end
 
 function O(s::State, a::Action, sp::State)
-    # if absorbing state, return meaningless observation
+    # if absorbing state, return dummy observation
     if sp.t == 0
         return SparseCat([Observation(false, invalid_i, invalid_p)], [1.])
     end    
@@ -232,16 +245,17 @@ pomdp = QuickPOMDP(MyPOMDP,
 log("created POMDP")
 
 # solve POMDP with POMCPOW
-solver = POMCPOW.POMCPOWSolver(max_depth=params.max_depth, estimate_value=RolloutEstimator(Solvers.ConstrainedRandomSolver(actions(pomdp)[1:params.K])))
+solver = POMCPOW.POMCPOWSolver(max_depth=params.max_depth, rng=RNG1, estimate_value=RolloutEstimator(Solvers.ConstrainedRandomSolver(actions(pomdp)[1:params.K], RNG2)))
 planner = solve(solver, pomdp);
-log("solved POMDP using POMCPOW with max search depth "*string(params.max_depth))
+log("solved POMDP using POMCPOW with max search depth "*string(params.max_depth)* " and rollouts simulated by ConstrainedRandomSolver")
 
-# save serialized planner
-open("./policies/"*expID*"_policy.txt", "w") do file
-    serialize(file, planner)
+if !TEST
+    # save serialized planner
+    open("./policies/"*expID*"_policy.txt", "w") do file
+        serialize(file, planner)
+    end
+    log("saved policy to "*"./policies/"*expID*"_policy.txt")
 end
-
-log("saved policy to "*"./policies/"*expID*"_policy.txt")
 
 # simulate rollouts
 steps = params.exp_steps
@@ -260,14 +274,13 @@ for iter in 1:iters
     t = 1
     r_accum = 0.
     beliefs_iter = Array{ParticleFilters.ParticleCollection{State}}(undef, steps)
-    for (s, a, o, r, b) in stepthrough(pomdp, planner, updater(planner), prior, initial_states[iter], "s,a,o,r,b", max_steps=steps)
+    for (s, a, o, r, b) in stepthrough(pomdp, planner, updater(planner), prior, initial_states[iter], "s,a,o,r,b", max_steps=steps, rng=RNG3)
         r_accum = r_accum + r
         beliefs_iter[t] = b
         if t == 1
             open("./sims/"*expID*"_run"*string(iter)*".txt", "w") do file
                 write(file, string(s))
             end
-#             initial_states[iter] = s
         end
         if a.isBeta
             msg = "\n"*string(t)*",B,"*a.name*",(i"*string(o.p.i0)*"-i"*string(o.p.i1)*";"*string(o.p.label)*"),"*string(r)
@@ -284,13 +297,14 @@ for iter in 1:iters
 end
     
 log("ran "*string(iters)*" POMCPOW rollouts for "*string(steps)*" timesteps each")
-log("POMCPOW R: "*string(POMCPOW_R))
 
-open("./beliefs/"*expID*"_belief.txt", "w") do file
-    serialize(file, beliefs)
+if !TEST
+    open("./beliefs/"*expID*"_belief.txt", "w") do file
+        serialize(file, beliefs)
+    end
+    log("saved beliefs to "*"./beliefs/"*expID*"_belief.txt")
 end
 
-log("saved beliefs to "*"./beliefs/"*expID*"_belief.txt")
 
 # calculate maximum possible reward
 max_R = zeros(iters)
@@ -301,4 +315,6 @@ for iter in 1:iters
     max_R[iter] = maximum([dot(initial_state.u, initial_state.d[i]) for i in 1:params.K])*steps
 end
 
+log("POMCPOW R: "*string(POMCPOW_R))
 log("Max R: "*string(max_R))
+log("Normalized R: "*string(POMCPOW_R./max_R))
