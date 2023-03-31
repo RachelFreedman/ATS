@@ -3,6 +3,7 @@ Run experiments using active teacher selection on a finite-horizon, undiscounted
 to run:
     julia ATS_finite.jl test_boolean num_items num_arms utility_granularity arm_granularity num_runs run_length state_index max_depth seed
 =#
+exp_name = "active_finite_"
 
 include("../POMCPOW_modified/src/POMCPOW.jl")
 include("../POMCPOW_modified/src/Solvers.jl")
@@ -13,7 +14,7 @@ import .Solvers
 using POMDPs, QuickPOMDPs, POMDPModelTools, POMDPPolicies, Parameters, Random, Plots, LinearAlgebra, POMDPTools, BasicPOMCP, D3Trees, GridInterpolations, POMDPModels, Combinatorics, Dates, Serialization, ParticleFilters
 
 TEST = ARGS[1] == "true"
-expID = Dates.format(Dates.now(), "yymd_HHMMS")
+expID = exp_name * Dates.format(Dates.now(), "yymd_HHMMS")
 
 function log(s::String)
     if !TEST
