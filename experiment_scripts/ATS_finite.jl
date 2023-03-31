@@ -39,16 +39,12 @@ log("Running experiment with ID "*expID)
     exp_iters::Int = parse(Int64, ARGS[6])   # number of rollouts to run
     exp_steps::Int = parse(Int64, ARGS[7])   # number of timesteps per rollout
     s_index::Int = parse(Int64, ARGS[8])     # index of true state
-    max_depth::Int = parse(Int64, ARGS[9])   # index of true state
-    seed::Int = parse(Int64, ARGS[10])
+    max_depth::Int = parse(Int64, ARGS[9])   # max depth of search tree
+    seed::Int = parse(Int64, ARGS[10])       # random seed
 end
 
 params = MyParameters()
 log(string(params))
-
-RNG1 = Random.seed!(params.seed)
-RNG2 = Random.seed!(params.seed+1)
-RNG3 = Random.seed!(params.seed+1)
 
 struct State
     t::Int                    # timesteps remaining before end of run
@@ -245,7 +241,7 @@ pomdp = QuickPOMDP(MyPOMDP,
 log("created POMDP")
 
 # solve POMDP with POMCPOW
-solver = POMCPOW.POMCPOWSolver(max_depth=params.max_depth, rng=RNG1, estimate_value=RolloutEstimator(Solvers.ConstrainedRandomSolver(actions(pomdp)[1:params.K], RNG2)))
+solver = POMCPOW.POMCPOWSolver(max_depth=params.max_depth, rng=Random.seed!(params.seed), estimate_value=RolloutEstimator(Solvers.ConstrainedRandomSolver(actions(pomdp)[1:params.K], Random.seed!(params.seed))))
 planner = solve(solver, pomdp);
 log("solved POMDP using POMCPOW with max search depth "*string(params.max_depth)* " and rollouts simulated by ConstrainedRandomSolver")
 
@@ -274,7 +270,7 @@ for iter in 1:iters
     t = 1
     r_accum = 0.
     beliefs_iter = Array{ParticleFilters.ParticleCollection{State}}(undef, steps)
-    for (s, a, o, r, b) in stepthrough(pomdp, planner, updater(planner), prior, initial_states[iter], "s,a,o,r,b", max_steps=steps, rng=RNG3)
+    for (s, a, o, r, b) in stepthrough(pomdp, planner, updater(planner), prior, initial_states[iter], "s,a,o,r,b", max_steps=steps, rng=Random.seed!(params.seed))
         r_accum = r_accum + r
         beliefs_iter[t] = b
         if t == 1
@@ -287,8 +283,10 @@ for iter in 1:iters
         else
             msg = "\n"*string(t)*",C,"*a.name*",i"*string(o.i)*","*string(r)
         end
-        open("./sims/"*expID*"_run"*string(iter)*".txt", "a") do file
-            write(file, msg)
+        if !TEST
+            open("./sims/"*expID*"_run"*string(iter)*".txt", "a") do file
+                write(file, msg)
+            end
         end
         t = t + 1
     end
