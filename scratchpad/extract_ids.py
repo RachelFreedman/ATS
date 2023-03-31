@@ -7,7 +7,7 @@ def extract_experiment_ids(file_path):
     return experiment_ids
 
 # Example usage
-file_path = 'log.txt'
+file_path = './scratchpad/log.txt'
 print(f"Extracting IDs from {file_path}.\n")
 experiment_ids = '\", \"'.join(extract_experiment_ids(file_path))
 print('[\"'+experiment_ids+'\"]')

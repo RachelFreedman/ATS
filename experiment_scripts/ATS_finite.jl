@@ -4,8 +4,8 @@ to run:
     julia ATS_finite.jl test_boolean num_items num_arms utility_granularity arm_granularity num_runs run_length state_index max_depth seed
 =#
 
-include("../modified_POMCPOW/src/POMCPOW.jl")
-include("../modified_POMCPOW/src/Solvers.jl")
+include("../POMCPOW_modified/src/POMCPOW.jl")
+include("../POMCPOW_modified/src/Solvers.jl")
 
 import .POMCPOW
 import .Solvers
@@ -308,13 +308,16 @@ end
 
 # calculate maximum possible reward
 max_R = zeros(iters)
+rand_R = zeros(iters)
 
 for iter in 1:iters
     # use the same initial states as the POMCPOW runs
     initial_state = initial_states[iter]
     max_R[iter] = maximum([dot(initial_state.u, initial_state.d[i]) for i in 1:params.K])*steps
+    rand_R[iter] = (mean([dot(initial_state.u, initial_state.d[i]) for i in 1:params.K])*steps)/2.
 end
 
-log("POMCPOW R: "*string(POMCPOW_R))
-log("Max R: "*string(max_R))
-log("Normalized R: "*string(POMCPOW_R./max_R))
+log("Max R:\t\t(avg "*string(round(mean(max_R),digits=0))*")\t"*string(max_R))
+log("Random R:\t(avg "*string(round(mean(rand_R),digits=0))*")\t"*string(rand_R))
+log("POMCPOW R:\t(avg "*string(round(mean(POMCPOW_R),digits=0))*")\t"*string(POMCPOW_R))
+log("Normalized R:\t(avg "*string(round(mean(POMCPOW_R./max_R),digits=2))*")\t"*string(POMCPOW_R./max_R))

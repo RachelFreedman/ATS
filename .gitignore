@@ -7,3 +7,5 @@ beliefs/
 fig/
 *.DS_Store
 log.txt
+JuliaPOMDP_modified/
+experiment_scripts/test.jl

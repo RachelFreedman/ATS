@@ -36,9 +36,7 @@ function action(policy::ConstrainedRandomPolicy, s)
 end
 
 function action(policy::ConstrainedRandomPolicy, b::Nothing)
-    a= rand(policy.rng, policy.actions)
-    print(a)
-    return a
+    return rand(policy.rng, policy.actions)
 end
 
 ## convenience functions ##
