@@ -1,5 +1,5 @@
 # args: test_boolean num_items num_arms utility_granularity arm_granularity num_runs run_length state_index seed
-# takes 2.5h
+# takes 6m
 julia ./experiment_scripts/random.jl false 3 3 3 3 20 1000 1217 1
 julia ./experiment_scripts/random.jl false 3 3 3 3 20 1000 1226 1
 julia ./experiment_scripts/random.jl false 3 3 3 3 20 1000 1235 1
