@@ -1,5 +1,5 @@
 # args: test_boolean num_items num_arms utility_granularity arm_granularity num_runs run_length state_index max_depth seed
-# takes ??
+# takes 2h
 julia ./experiment_scripts/ATS_finite.jl false 3 3 3 3 25 100 1217 100 1
 julia ./experiment_scripts/ATS_finite.jl false 3 3 3 3 25 100 1226 100 1
 julia ./experiment_scripts/ATS_finite.jl false 3 3 3 3 25 100 1235 100 1

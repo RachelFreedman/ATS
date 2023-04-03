@@ -1,22 +1,22 @@
+# NOTE: Designed to be quick by reducing runs. Results may not be consistent or reliable.
 # args: test_boolean num_items num_arms utility_granularity arm_granularity num_runs run_length state_index max_depth seed
-# takes ??
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 1 217 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 1 226 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 1 235 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 1 245 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 4 586 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 4 589 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 4 629 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 4 638 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 4 641 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 1 572 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 1 712 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 3 191 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 3 204 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 3 437 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 3 446 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 3 514 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 3 526 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 3 616 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 4 151 50 1
-julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 4 426 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 1217 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 1226 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 1235 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 1245 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 4586 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 4589 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 4629 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 4638 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 4641 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 1572 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 1712 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 3191 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 3204 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 3437 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 3446 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 3514 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 3526 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 3616 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 4151 50 1
+julia ./experiment_scripts/passive_infinite.jl false 3 3 0.9 3 3 10 100 4426 50 1
