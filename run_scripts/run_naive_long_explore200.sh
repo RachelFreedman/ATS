@@ -1,0 +1,22 @@
+# args: test_boolean num_items num_arms utility_granularity arm_granularity num_runs run_length state_index explore_length teacher seed
+# takes 5m
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 1217 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 1226 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 1235 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 1245 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 4586 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 4589 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 4629 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 4638 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 4641 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 1572 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 1712 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 3191 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 3204 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 3437 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 3446 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 3514 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 3526 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 3616 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 4151 200 2 1
+julia ./experiment_scripts/naive.jl false 3 3 3 3 25 1000 4426 200 2 1

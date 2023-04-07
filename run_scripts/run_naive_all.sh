@@ -1,0 +1,5 @@
+zsh run_naive_short_explore25.sh
+zsh run_naive_short_explore50.sh
+zsh run_naive_long_explore50.sh
+zsh run_naive_long_explore100.sh
+zsh run_naive_long_explore200.sh
