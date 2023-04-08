@@ -143,7 +143,7 @@ log("generated transition function")
 function R(s::State, a::Action)
     # if beta selected, return 0
     if a.isBeta
-        return 0
+        return -1
         # if arm pulled, return that arm's avg utility
     else
         utilities = s.u
