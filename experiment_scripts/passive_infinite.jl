@@ -4,6 +4,7 @@ to run:
     julia passive_infinite.jl test_boolean num_items num_arms discount utility_granularity arm_granularity num_runs run_length state_index max_depth seed
 =#
 exp_name = "passive_infinite_"
+FILTER = true
 
 include("../POMCPOW_modified/src/POMCPOW.jl")
 include("../POMCPOW_modified/src/Solvers.jl")
@@ -27,6 +28,10 @@ function log(s::String)
 end
 
 log("Running experiment with ID "*expID)
+
+if FILTER
+    log("filtering out states with duplicate components")
+end
 
 @with_kw struct MyParameters
     N::Int = parse(Int64, ARGS[2])           # size of item set
@@ -54,10 +59,25 @@ struct State
     b::Array{Float64}         # list of M beta values
 end
 
+function no_duplicates(a::Array)
+    for i in 1:length(a)-1
+        for j in i+1:length(a)
+            if a[i] == a[j]
+                return false
+            end
+        end
+    end
+    return true
+end
+
 # space of utility functions
 umin = 0
 grid_coor = fill(range(umin,params.umax,length=params.u_grain), params.N)
 U = RectangleGrid(grid_coor...)
+
+if FILTER
+    U = filter(x -> no_duplicates(x), collect(U))
+end
 
 @assert length(U[1]) == params.N
 log("generated "*string(length(U))*" utilities (each length "*string(length(U[1]))*" items)")
@@ -89,6 +109,10 @@ coor = collect(range(0.,1.,length=params.d_grain))
 simplex_list = generate_probability_distributions(params.N, coor)
 D_tuples = vec(collect(Base.product(fill(simplex_list, params.K)...)))
 D = [collect(d) for d in D_tuples]
+
+if FILTER
+    D = filter(x -> no_duplicates(x), D)
+end
 
 @assert length(D[1]) == params.K
 @assert length(D[1][1]) == params.N
@@ -298,7 +322,7 @@ for iter in 1:iters
     # use the same initial states as the POMCPOW runs
     initial_state = initial_states[iter]
     max_R[iter] = maximum([dot(initial_state.u, initial_state.d[i]) for i in 1:params.K])*steps
-    rand_R[iter] = (mean([dot(initial_state.u, initial_state.d[i]) for i in 1:params.K])*steps)/2.
+    rand_R[iter] = (mean([dot(initial_state.u, initial_state.d[i]) for i in 1:params.K])*steps)/(params.K/(params.K+params.M))
 end
 
 log("Max R:\t\t(avg "*string(round(mean(max_R),digits=0))*")\t"*string(max_R))

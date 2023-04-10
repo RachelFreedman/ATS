@@ -279,7 +279,7 @@ for iter in 1:iters
     # use the same initial states as the POMCPOW runs
     initial_state = initial_states[iter]
     max_R[iter] = maximum([dot(initial_state.u, initial_state.d[i]) for i in 1:params.K])*steps
-    mean_R[iter] = (mean([dot(initial_state.u, initial_state.d[i]) for i in 1:params.K])*steps)/2.
+    mean_R[iter] = (mean([dot(initial_state.u, initial_state.d[i]) for i in 1:params.K])*steps)/(params.K/(params.K+params.M))
 end
     
 log("Max R:\t\t(avg "*string(round(mean(max_R),digits=0))*")\t"*string(max_R))
