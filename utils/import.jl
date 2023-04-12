@@ -25,10 +25,16 @@ function parse_state(s::String)
     U = [parse(Float64, x) for x in split(u_str, ", ")]
 
     spsp = split(sp[3], ['[', ']'])
+    
+    # for 3 arms
     d_str = [spsp[3], spsp[5], spsp[7]]
-    D = [[parse(Float64, x) for x in split(elem, ", ")] for elem in d_str]
-
     b_str = spsp[10]
+
+    # for 4 arms
+    # d_str = [spsp[3], spsp[5], spsp[7], spsp[9]]
+    # b_str = spsp[11]
+
+    D = [[parse(Float64, x) for x in split(elem, ", ")] for elem in d_str]
     B = [parse(Float64, x) for x in split(b_str, ", ")]
 
     return State(T, U, D, B)
