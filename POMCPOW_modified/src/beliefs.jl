@@ -18,6 +18,8 @@ end
 
 rand(rng::AbstractRNG, b::POWNodeBelief) = rand(rng, b.dist)
 state_mean(b::POWNodeBelief) = first_mean(b.dist)
+cdf_mode(b::POWNodeBelief) = cdf_mode(b.dist)
+
 POMDPs.currentobs(b::POWNodeBelief) = b.o
 POMDPs.history(b::POWNodeBelief) = tuple((a=b.a, o=b.o))
 
@@ -39,5 +41,7 @@ end
 
 rand(rng::AbstractRNG, b::StateBelief) = first(rand(rng, b.sr_belief))
 mean(b::StateBelief) = state_mean(b.sr_belief)
+cdf_mode(b::StateBelief) = cdf_mode(b.sr_belief)
+
 POMDPs.currentobs(b::StateBelief) = currentobs(b.sr_belief)
 POMDPs.history(b::StateBelief) = history(b.sr_belief)

@@ -45,6 +45,16 @@ function first_mean(d::CategoricalVector{Tuple{S,Float64}}) where S
     return sum/last(d.cdf)
 end
 
+function cdf_mode(d::CategoricalVector)
+    marginal_prob = Vector{Float64}(undef, length(d.cdf))
+    marginal_prob[1] = d.cdf[1]
+    for i in 2:length(d.cdf)
+        marginal_prob[i] = d.cdf[i] - d.cdf[i-1]
+    end
+    index = argmax(marginal_prob)
+    return first(d.items[index])
+end
+
 #=
 function rand(rng::AbstractRNG, d::CategoricalVector)
     t = rand(rng) * d.weight_sum

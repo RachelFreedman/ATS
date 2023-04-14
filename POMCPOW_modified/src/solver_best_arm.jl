@@ -32,10 +32,10 @@ BestArmPolicy(problem::Union{POMDP,MDP},
              updater=IdentityUpdater()) = BestArmPolicy(rng, actions, problem, updater)
 
 function action(policy::BestArmPolicy, b)
-    s = rand(policy.rng, b)
-    # println("sampled state: ", s)
+    s = cdf_mode(b)
+    # println("modal state: ", s)
     best_arm = argmax([dot(s.u, d) for d in s.d])
-    # println("best arm according to sample: ", best_arm)
+    # println("best arm: ", best_arm)
     a = policy.actions[best_arm]
     return a
 end
