@@ -6,10 +6,8 @@ to run:
 exp_name = "active_infinite_"
 
 include("../POMCPOW_modified/src/POMCPOW.jl")
-include("../POMCPOW_modified/src/Solvers.jl")
 
 import .POMCPOW
-import .Solvers
 
 using POMDPs, QuickPOMDPs, POMDPModelTools, POMDPPolicies, Parameters, Random, Plots, LinearAlgebra, POMDPTools, BasicPOMCP, D3Trees, GridInterpolations, POMDPModels, Combinatorics, Dates, Serialization, ParticleFilters
 
@@ -225,9 +223,11 @@ pomdp = QuickPOMDP(MyPOMDP,
 log("created POMDP")
 
 # solve POMDP with POMCPOW
-solver = POMCPOW.POMCPOWSolver(max_depth=params.max_depth, rng=Random.seed!(params.seed), estimate_value=RolloutEstimator(Solvers.ConstrainedRandomSolver(actions(pomdp)[1:params.K], Random.seed!(params.seed))))
+# solver = POMCPOW.POMCPOWSolver(max_depth=params.max_depth, rng=Random.seed!(params.seed), estimate_value=RolloutEstimator(Solvers.BestArmSolver(arm_actions, Random.seed!(params.seed))))
+solver = POMCPOW.POMCPOWSolver(max_depth=params.max_depth, rng=Random.seed!(params.seed), estimate_value=RolloutEstimator(POMCPOW.BestArmSolver(actions(pomdp)[1:params.K], Random.seed!(params.seed))))
 planner = solve(solver, pomdp);
-log("solved POMDP using POMCPOW with max search depth "*string(params.max_depth)* " and rollouts simulated by ConstrainedRandomSolver")
+log("solved POMDP using POMCPOW with max search depth "*string(params.max_depth)* " and rollouts simulated by BestArmSolver")
+# log("solved POMDP using POMCPOW with max search depth "*string(params.max_depth)* " and rollouts simulated by ConstrainedRandomSolver")
 
 if !TEST
     # save serialized planner

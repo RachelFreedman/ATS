@@ -44,7 +44,9 @@ export
     blink,
 
     # RAF change
-    test
+    test,
+    IdentityUpdater,
+    update
 
 const init_V = init_Q
 
@@ -179,5 +181,38 @@ include("visualization.jl")
 function test()
     println("Successfully imported custom module.")
 end
+
+
+using BasicPOMCP
+using LinearAlgebra
+using Random
+using StatsBase # for Weights
+using SparseArrays # for sparse vectors in alpha_vector.jl
+
+using POMDPs
+import POMDPs: action, value, solve, updater
+
+using BeliefUpdaters
+using POMDPModelTools
+
+using Base.Iterators # for take
+
+"""
+    actionvalues(p::Policy, s)
+
+returns the values of each action at state s in a vector
+"""
+function actionvalues end
+
+export 
+    actionvalues
+
+include("solver_constrained_random.jl")
+include("solver_best_arm.jl")
+
+export
+    ConstrainedRandomPolicy
+    ConstrainedRandomSolver
+    BestArmSolver
 
 end # module
