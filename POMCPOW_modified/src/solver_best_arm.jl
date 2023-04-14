@@ -33,9 +33,9 @@ BestArmPolicy(problem::Union{POMDP,MDP},
 
 function action(policy::BestArmPolicy, b)
     s = rand(policy.rng, b)
-    println("sampled state: ", s)
+    # println("sampled state: ", s)
     best_arm = argmax([dot(s.u, d) for d in s.d])
-    println("best arm according to sample: ", best_arm)
+    # println("best arm according to sample: ", best_arm)
     a = policy.actions[best_arm]
     return a
 end
