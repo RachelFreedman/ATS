@@ -57,6 +57,10 @@ umin = 0
 grid_coor = fill(range(umin,params.umax,length=params.u_grain), params.N)
 U = RectangleGrid(grid_coor...)
 
+# shift utility range
+penalty = 2
+U = [x.-2 for x in U]
+
 @assert length(U[1]) == params.N
 log("generated "*string(length(U))*" utilities (each length "*string(length(U[1]))*" items)")
 

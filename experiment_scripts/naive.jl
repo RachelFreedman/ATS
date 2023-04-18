@@ -59,6 +59,10 @@ umin = 0
 grid_coor = fill(range(umin,params.umax,length=params.u_grain), params.N)
 U = RectangleGrid(grid_coor...)
 
+# shift utility range
+penalty = 2
+U = [x.-2 for x in U]
+
 @assert length(U[1]) == params.N
 log("generated "*string(length(U))*" utilities (each length "*string(length(U[1]))*" items)")
 
@@ -407,6 +411,8 @@ for iter in 1:params.exp_iters
     u_est = estimate_u(as, os, params.teacher, params.M, params.N, params.beta, params.umax)
     d_est = estimate_d(as, os, params.K, params.N)
     max_a, max_val = calc_max_arm(u_est, d_est)
+
+    u_est = u_est .- penalty
     
     log("Estimated U: "*string(u_est))
     log("True U: "*string(true_state.u))

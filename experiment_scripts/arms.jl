@@ -6,10 +6,8 @@ to run:
 exp_name = "arms_"
 
 include("../POMCPOW_modified/src/POMCPOW.jl")
-include("../POMCPOW_modified/src/Solvers.jl")
 
 import .POMCPOW
-import .Solvers
 
 using POMDPs, QuickPOMDPs, POMDPModelTools, POMDPPolicies, Parameters, Random, Plots, LinearAlgebra, POMDPTools, BasicPOMCP, D3Trees, GridInterpolations, POMDPModels, Combinatorics, Dates, Serialization, ParticleFilters
 
@@ -57,6 +55,10 @@ end
 umin = 0
 grid_coor = fill(range(umin,params.umax,length=params.u_grain), params.N)
 U = RectangleGrid(grid_coor...)
+
+# shift utility range
+penalty = 2
+U = [x.-2 for x in U]
 
 @assert length(U[1]) == params.N
 log("generated "*string(length(U))*" utilities (each length "*string(length(U[1]))*" items)")
