@@ -52,7 +52,7 @@ function get_star(expID::String, runs::Int, directory)
     run_lines = []
     for run in 1:runs
         run_lines = []
-        open(directory*"/sims/"*expID*"_run"*string(run)*".txt", "r") do file
+        open(directory*"/data/sims/"*expID*"_run"*string(run)*".txt", "r") do file
             for line in readlines(file)
                 push!(run_lines, line)
             end

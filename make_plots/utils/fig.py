@@ -53,7 +53,7 @@ def import_csv(ids: list[str], runs: int) -> pd.DataFrame:
     for id in ids:
         data[id] = {}
         for run in range(runs):
-            filename = f"../sims/{id}_run{str(run+1)}.txt"
+            filename = f"../data/sims/{id}_run{str(run+1)}.txt"
             with open(filename, "r") as f:
                 state = State.parse(f.readline())
 
