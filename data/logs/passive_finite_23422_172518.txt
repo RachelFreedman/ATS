@@ -1,0 +1,60 @@
+17:25:18	Running experiment with ID passive_finite_23422_172518
+17:25:18	MyParameters
+  N: Int64 3
+  K: Int64 3
+  M: Int64 3
+  y: Float64 1.0
+  umax: Int64 10
+  u_grain: Int64 3
+  d_grain: Int64 3
+  beta: Array{Float64}((3,)) [0.0, 0.01, 50.0]
+  exp_iters: Int64 25
+  exp_steps: Int64 1000
+  s_index: Int64 3616
+  max_depth: Int64 4
+  seed: Int64 1
+
+17:25:18	generated 27 utilities (each length 3 items)
+17:25:19	generated 216 arm distribution sets (each shape 3 arms x 3 items)
+17:25:19	generated 1 beta value sets (each length 3 teachers)
+17:25:20	generated 5832001 states, 5832 of which are potential start states
+17:25:20	generated 4 actions
+17:25:20	generated transition function
+17:25:20	generated reward function
+17:25:21	generated 21 observations
+17:25:21	generated observation function
+17:25:22	created POMDP
+17:25:22	solved POMDP using POMCPOW with max search depth 4 and rollouts simulated by BestArmSolver
+17:25:38	saved policy to ./policies/passive_finite_23422_172518_policy.txt
+17:25:38	hardcoded state: State(1000, [-2.0, 8.0, 8.0], Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.0, 0.5]], [0.0, 0.01, 50.0])
+17:25:38	logging POMCPOW simulation 1 to ./sims/passive_finite_23422_172518_run1.txt
+17:25:57	logging POMCPOW simulation 2 to ./sims/passive_finite_23422_172518_run2.txt
+17:26:14	logging POMCPOW simulation 3 to ./sims/passive_finite_23422_172518_run3.txt
+17:26:31	logging POMCPOW simulation 4 to ./sims/passive_finite_23422_172518_run4.txt
+17:26:48	logging POMCPOW simulation 5 to ./sims/passive_finite_23422_172518_run5.txt
+17:27:05	logging POMCPOW simulation 6 to ./sims/passive_finite_23422_172518_run6.txt
+17:27:23	logging POMCPOW simulation 7 to ./sims/passive_finite_23422_172518_run7.txt
+17:27:41	logging POMCPOW simulation 8 to ./sims/passive_finite_23422_172518_run8.txt
+17:27:58	logging POMCPOW simulation 9 to ./sims/passive_finite_23422_172518_run9.txt
+17:28:15	logging POMCPOW simulation 10 to ./sims/passive_finite_23422_172518_run10.txt
+17:28:36	logging POMCPOW simulation 11 to ./sims/passive_finite_23422_172518_run11.txt
+17:28:53	logging POMCPOW simulation 12 to ./sims/passive_finite_23422_172518_run12.txt
+17:29:34	logging POMCPOW simulation 13 to ./sims/passive_finite_23422_172518_run13.txt
+17:29:52	logging POMCPOW simulation 14 to ./sims/passive_finite_23422_172518_run14.txt
+17:30:09	logging POMCPOW simulation 15 to ./sims/passive_finite_23422_172518_run15.txt
+17:30:38	logging POMCPOW simulation 16 to ./sims/passive_finite_23422_172518_run16.txt
+17:30:55	logging POMCPOW simulation 17 to ./sims/passive_finite_23422_172518_run17.txt
+17:31:12	logging POMCPOW simulation 18 to ./sims/passive_finite_23422_172518_run18.txt
+17:31:31	logging POMCPOW simulation 19 to ./sims/passive_finite_23422_172518_run19.txt
+17:31:48	logging POMCPOW simulation 20 to ./sims/passive_finite_23422_172518_run20.txt
+17:32:06	logging POMCPOW simulation 21 to ./sims/passive_finite_23422_172518_run21.txt
+17:32:23	logging POMCPOW simulation 22 to ./sims/passive_finite_23422_172518_run22.txt
+17:32:40	logging POMCPOW simulation 23 to ./sims/passive_finite_23422_172518_run23.txt
+17:33:05	logging POMCPOW simulation 24 to ./sims/passive_finite_23422_172518_run24.txt
+17:33:22	logging POMCPOW simulation 25 to ./sims/passive_finite_23422_172518_run25.txt
+17:33:40	ran 25 POMCPOW rollouts for 1000 timesteps each
+17:35:35	saved beliefs to ./beliefs/passive_finite_23422_172518_belief.txt
+17:35:35	Max R:		(avg 8000.0)	[8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0]
+17:35:35	Random R:	(avg 2333.0)	[2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335]
+17:35:35	Passive R:	(avg 4646.0)	[7960.0, 6267.0, 5475.0, 3047.0, 4850.0, 7940.0, 3042.0, 3007.0, 4665.0, 4832.0, 3010.0, 1577.0, 5453.0, 7947.0, 2272.0, 3935.0, 3044.0, 3045.0, 5475.0, 5690.0, 3035.0, 3069.0, 3307.0, 7932.0, 6272.0]
+17:35:35	Normalized R:	(avg 0.58)	[0.995, 0.783375, 0.684375, 0.380875, 0.60625, 0.9925, 0.38025, 0.375875, 0.583125, 0.604, 0.37625, 0.197125, 0.681625, 0.993375, 0.284, 0.491875, 0.3805, 0.380625, 0.684375, 0.71125, 0.379375, 0.383625, 0.413375, 0.9915, 0.784]

@@ -1,0 +1,59 @@
+18:01:22	Running experiment with ID random_23422_180122
+18:01:23	MyParameters
+  N: Int64 3
+  K: Int64 3
+  M: Int64 3
+  y: Float64 1.0
+  umax: Int64 10
+  u_grain: Int64 3
+  d_grain: Int64 3
+  beta: Array{Float64}((3,)) [0.0, 0.01, 50.0]
+  exp_iters: Int64 25
+  exp_steps: Int64 1000
+  s_index: Int64 4589
+  seed: Int64 1
+
+18:01:23	generated 27 utilities (each length 3 items)
+18:01:23	generated 216 arm distribution sets (each shape 3 arms x 3 items)
+18:01:23	generated 1 beta value sets (each length 3 teachers)
+18:01:25	generated 5832000 states, 5832 of which are potential start states
+18:01:25	generated 6 actions
+18:01:25	generated transition function
+18:01:25	generated reward function
+18:01:25	generated 21 observations
+18:01:25	generated observation function
+18:01:26	created POMDP
+18:01:26	created Random solver
+18:01:26	true state State(1000, [3.0, 8.0, 8.0], Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]], [0.0, 0.01, 50.0])
+18:01:26	hardcoded state: State(1000, [3.0, 8.0, 8.0], Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]], [0.0, 0.01, 50.0])
+18:01:26	logging random simulation 1 to ./sims/random_23422_180122_run1.txt
+18:01:27	logging random simulation 2 to ./sims/random_23422_180122_run2.txt
+18:01:27	logging random simulation 3 to ./sims/random_23422_180122_run3.txt
+18:01:27	logging random simulation 4 to ./sims/random_23422_180122_run4.txt
+18:01:27	logging random simulation 5 to ./sims/random_23422_180122_run5.txt
+18:01:27	logging random simulation 6 to ./sims/random_23422_180122_run6.txt
+18:01:27	logging random simulation 7 to ./sims/random_23422_180122_run7.txt
+18:01:27	logging random simulation 8 to ./sims/random_23422_180122_run8.txt
+18:01:27	logging random simulation 9 to ./sims/random_23422_180122_run9.txt
+18:01:27	logging random simulation 10 to ./sims/random_23422_180122_run10.txt
+18:01:27	logging random simulation 11 to ./sims/random_23422_180122_run11.txt
+18:01:27	logging random simulation 12 to ./sims/random_23422_180122_run12.txt
+18:01:27	logging random simulation 13 to ./sims/random_23422_180122_run13.txt
+18:01:27	logging random simulation 14 to ./sims/random_23422_180122_run14.txt
+18:01:27	logging random simulation 15 to ./sims/random_23422_180122_run15.txt
+18:01:28	logging random simulation 16 to ./sims/random_23422_180122_run16.txt
+18:01:28	logging random simulation 17 to ./sims/random_23422_180122_run17.txt
+18:01:28	logging random simulation 18 to ./sims/random_23422_180122_run18.txt
+18:01:28	logging random simulation 19 to ./sims/random_23422_180122_run19.txt
+18:01:28	logging random simulation 20 to ./sims/random_23422_180122_run20.txt
+18:01:28	logging random simulation 21 to ./sims/random_23422_180122_run21.txt
+18:01:28	logging random simulation 22 to ./sims/random_23422_180122_run22.txt
+18:01:28	logging random simulation 23 to ./sims/random_23422_180122_run23.txt
+18:01:28	logging random simulation 24 to ./sims/random_23422_180122_run24.txt
+18:01:28	logging random simulation 25 to ./sims/random_23422_180122_run25.txt
+18:01:28	ran 25 random rollouts for 1000 timesteps each
+18:01:28	random solver doesn't update belief, so not serializing beliefs
+18:01:28	Max R:		(avg 8000.0)	[8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0]
+18:01:28	Mean R:	(avg 3167.0)	[3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665] (taking expectation over actions)
+18:01:28	Random R:	(avg 3153.0)	[3094.0, 3218.5, 3288.5, 3199.0, 3224.0, 2970.5, 3169.0, 3042.0, 3166.0, 3220.5, 3174.5, 3103.5, 3056.0, 3309.0, 2978.0, 3241.0, 3103.5, 2954.0, 3127.5, 3170.5, 3188.0, 3183.0, 3178.0, 3314.5, 3154.0]
+18:01:28	Normalized R:	(avg 0.39)	[0.38675, 0.4023125, 0.4110625, 0.399875, 0.403, 0.3713125, 0.396125, 0.38025, 0.39575, 0.4025625, 0.3968125, 0.3879375, 0.382, 0.413625, 0.37225, 0.405125, 0.3879375, 0.36925, 0.3909375, 0.3963125, 0.3985, 0.397875, 0.39725, 0.4143125, 0.39425]

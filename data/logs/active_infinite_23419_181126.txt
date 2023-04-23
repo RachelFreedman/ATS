@@ -1,0 +1,60 @@
+18:11:26	Running experiment with ID active_infinite_23419_181126
+18:11:27	MyParameters
+  N: Int64 3
+  K: Int64 3
+  M: Int64 3
+  y: Float64 0.99
+  umax: Int64 10
+  u_grain: Int64 3
+  d_grain: Int64 3
+  beta: Array{Float64}((3,)) [0.0, 0.01, 50.0]
+  exp_iters: Int64 25
+  exp_steps: Int64 1000
+  s_index: Int64 3616
+  max_depth: Int64 4
+  seed: Int64 1
+
+18:11:27	generated 27 utilities (each length 3 items)
+18:11:27	generated 216 arm distribution sets (each shape 3 arms x 3 items)
+18:11:27	generated 1 beta value sets (each length 3 teachers)
+18:11:29	generated 5832000 states, 5832 of which are potential start states
+18:11:29	generated 6 actions
+18:11:29	generated transition function
+18:11:29	generated reward function
+18:11:29	generated 21 observations
+18:11:29	generated observation function
+18:11:30	created POMDP
+18:11:31	solved POMDP using POMCPOW with max search depth 4 and rollouts simulated by BestArmSolver
+18:11:49	saved policy to ./policies/active_infinite_23419_181126_policy.txt
+18:11:49	hardcoded state: State(1000, [-2.0, 8.0, 8.0], Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.0, 0.5]], [0.0, 0.01, 50.0])
+18:11:49	logging POMCPOW simulation 1 to ./sims/active_infinite_23419_181126_run1.txt
+18:12:08	logging POMCPOW simulation 2 to ./sims/active_infinite_23419_181126_run2.txt
+18:12:24	logging POMCPOW simulation 3 to ./sims/active_infinite_23419_181126_run3.txt
+18:12:38	logging POMCPOW simulation 4 to ./sims/active_infinite_23419_181126_run4.txt
+18:12:52	logging POMCPOW simulation 5 to ./sims/active_infinite_23419_181126_run5.txt
+18:13:06	logging POMCPOW simulation 6 to ./sims/active_infinite_23419_181126_run6.txt
+18:13:20	logging POMCPOW simulation 7 to ./sims/active_infinite_23419_181126_run7.txt
+18:13:35	logging POMCPOW simulation 8 to ./sims/active_infinite_23419_181126_run8.txt
+18:13:49	logging POMCPOW simulation 9 to ./sims/active_infinite_23419_181126_run9.txt
+18:14:03	logging POMCPOW simulation 10 to ./sims/active_infinite_23419_181126_run10.txt
+18:14:17	logging POMCPOW simulation 11 to ./sims/active_infinite_23419_181126_run11.txt
+18:14:32	logging POMCPOW simulation 12 to ./sims/active_infinite_23419_181126_run12.txt
+18:14:47	logging POMCPOW simulation 13 to ./sims/active_infinite_23419_181126_run13.txt
+18:15:01	logging POMCPOW simulation 14 to ./sims/active_infinite_23419_181126_run14.txt
+18:15:16	logging POMCPOW simulation 15 to ./sims/active_infinite_23419_181126_run15.txt
+18:15:33	logging POMCPOW simulation 16 to ./sims/active_infinite_23419_181126_run16.txt
+18:15:48	logging POMCPOW simulation 17 to ./sims/active_infinite_23419_181126_run17.txt
+18:16:06	logging POMCPOW simulation 18 to ./sims/active_infinite_23419_181126_run18.txt
+18:16:20	logging POMCPOW simulation 19 to ./sims/active_infinite_23419_181126_run19.txt
+18:16:35	logging POMCPOW simulation 20 to ./sims/active_infinite_23419_181126_run20.txt
+18:16:50	logging POMCPOW simulation 21 to ./sims/active_infinite_23419_181126_run21.txt
+18:17:06	logging POMCPOW simulation 22 to ./sims/active_infinite_23419_181126_run22.txt
+18:17:22	logging POMCPOW simulation 23 to ./sims/active_infinite_23419_181126_run23.txt
+18:17:36	logging POMCPOW simulation 24 to ./sims/active_infinite_23419_181126_run24.txt
+18:17:50	logging POMCPOW simulation 25 to ./sims/active_infinite_23419_181126_run25.txt
+18:18:04	ran 25 POMCPOW rollouts for 1000 timesteps each
+18:20:15	saved beliefs to ./beliefs/active_infinite_23419_181126_belief.txt
+18:20:15	Max R:		(avg 8000.0)	[8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0]
+18:20:15	Random R:	(avg 2333.0)	[2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335, 2333.3333333333335]
+18:20:15	POMCPOW R:	(avg 6241.0)	[6269.0, 6056.0, 6222.0, 6060.0, 6511.0, 6764.0, 6789.0, 6091.0, 7241.0, 6061.0, 5924.0, 5832.0, 6443.0, 6214.0, 6083.0, 6055.0, 6255.0, 6297.0, 6513.0, 5656.0, 5631.0, 5630.0, 5388.0, 7481.0, 6561.0]
+18:20:15	Normalized R:	(avg 0.78)	[0.783625, 0.757, 0.77775, 0.7575, 0.813875, 0.8455, 0.848625, 0.761375, 0.905125, 0.757625, 0.7405, 0.729, 0.805375, 0.77675, 0.760375, 0.756875, 0.781875, 0.787125, 0.814125, 0.707, 0.703875, 0.70375, 0.6735, 0.935125, 0.820125]

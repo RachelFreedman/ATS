@@ -1,0 +1,206 @@
+01:40:34	Running experiment with ID naive_50_23420_014034
+01:40:34	MyParameters
+  N: Int64 3
+  K: Int64 3
+  M: Int64 3
+  umax: Int64 10
+  u_grain: Int64 3
+  d_grain: Int64 3
+  beta: Array{Float64}((3,)) [0.0, 0.01, 50.0]
+  exp_iters: Int64 25
+  exp_steps: Int64 1000
+  s_index: Int64 4589
+  t_explore: Int64 50
+  teacher: Int64 2
+  seed: Int64 1
+
+01:40:34	will explore for first 50 timesteps
+01:40:34	will estimate based on feedback from teacher 2 with beta 0.01
+01:40:34	generated 27 utilities (each length 3 items)
+01:40:35	generated 216 arm distribution sets (each shape 3 arms x 3 items)
+01:40:35	generated 1 beta value sets (each length 3 teachers)
+01:40:36	generated 5832000 states, 5832 of which are potential start states
+01:40:36	generated 6 actions
+01:40:36	generated reward function
+01:40:36	generated 21 observations
+01:40:36	generated observation function
+01:40:37	true state State(1000, [3.0, 8.0, 8.0], Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]], [0.0, 0.01, 50.0])
+01:40:37	logging naive policy simulation 1 to ./sims/naive_50_23420_014034_run1.txt
+01:40:37	estimating U using teacher 2 with beta 0.01
+01:40:37	Estimated U: [8.0, 1.5691544885672393, -2.0]
+01:40:37	True U: [3.0, 8.0, 8.0]
+01:40:37	Estimated D: Any[[0.0, 0.5, 0.5], [0.5714285714285714, 0.42857142857142855, 0.0], [0.1111111111111111, 0.8888888888888888, 0.0]]
+01:40:37	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:37	given U and D estimates, highest-reward arm is arm 2 with reward 7.243923352243102
+01:40:37	logging naive policy simulation 2 to ./sims/naive_50_23420_014034_run2.txt
+01:40:37	estimating U using teacher 2 with beta 0.01
+01:40:37	Estimated U: [8.0, -5.547556456757271, -2.0]
+01:40:37	True U: [3.0, 8.0, 8.0]
+01:40:37	Estimated D: Any[[0.0, 0.5294117647058824, 0.47058823529411764], [0.42857142857142855, 0.5714285714285714, 0.0], [0.1875, 0.8125, 0.0]]
+01:40:37	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:37	given U and D estimates, highest-reward arm is arm 2 with reward 2.2585391675672737
+01:40:37	logging naive policy simulation 3 to ./sims/naive_50_23420_014034_run3.txt
+01:40:37	estimating U using teacher 2 with beta 0.01
+01:40:37	Estimated U: [1.1849626868246927, -2.0, 8.0]
+01:40:37	True U: [3.0, 8.0, 8.0]
+01:40:37	Estimated D: Any[[0.0, 0.5, 0.5], [0.5217391304347826, 0.4782608695652174, 0.0], [0.3076923076923077, 0.6923076923076923, 0.0]]
+01:40:37	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:37	given U and D estimates, highest-reward arm is arm 1 with reward 5.0
+01:40:37	logging naive policy simulation 4 to ./sims/naive_50_23420_014034_run4.txt
+01:40:37	estimating U using teacher 2 with beta 0.01
+01:40:37	Estimated U: [5.701450122812894, -2.0, 8.0]
+01:40:37	True U: [3.0, 8.0, 8.0]
+01:40:37	Estimated D: Any[[0.0, 0.5161290322580645, 0.4838709677419355], [0.45714285714285713, 0.5428571428571428, 0.0], [0.3333333333333333, 0.6666666666666666, 0.0]]
+01:40:37	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:37	given U and D estimates, highest-reward arm is arm 1 with reward 4.838709677419355
+01:40:37	logging naive policy simulation 5 to ./sims/naive_50_23420_014034_run5.txt
+01:40:37	estimating U using teacher 2 with beta 0.01
+01:40:37	Estimated U: [8.0, -2.0, -4.120868436758045]
+01:40:37	True U: [3.0, 8.0, 8.0]
+01:40:37	Estimated D: Any[[0.0, 0.5142857142857142, 0.4857142857142857], [0.42, 0.58, 0.0], [0.40540540540540543, 0.5945945945945946, 0.0]]
+01:40:37	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:37	given U and D estimates, highest-reward arm is arm 2 with reward 4.2
+01:40:37	logging naive policy simulation 6 to ./sims/naive_50_23420_014034_run6.txt
+01:40:37	estimating U using teacher 2 with beta 0.01
+01:40:37	Estimated U: [8.0, -2.0, 7.395834756278962]
+01:40:37	True U: [3.0, 8.0, 8.0]
+01:40:37	Estimated D: Any[[0.0, 0.5227272727272727, 0.4772727272727273], [0.4642857142857143, 0.5357142857142857, 0.0], [0.4666666666666667, 0.5333333333333333, 0.0]]
+01:40:37	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:37	given U and D estimates, highest-reward arm is arm 3 with reward 4.666666666666667
+01:40:38	logging naive policy simulation 7 to ./sims/naive_50_23420_014034_run7.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [-2.0, -2.0, 8.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.49122807017543857, 0.5087719298245614], [0.4426229508196721, 0.5573770491803278, 0.0], [0.5294117647058824, 0.47058823529411764, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 1 with reward 5.087719298245615
+01:40:38	logging naive policy simulation 8 to ./sims/naive_50_23420_014034_run8.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [8.0, -8.670944100173713, -2.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.4696969696969697, 0.5303030303030303], [0.43661971830985913, 0.5633802816901409, 0.0], [0.5084745762711864, 0.4915254237288136, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 3 with reward 1.8058071372027502
+01:40:38	logging naive policy simulation 9 to ./sims/naive_50_23420_014034_run9.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [8.0, -9.312023610692506, -2.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.5068493150684932, 0.4931506849315068], [0.44047619047619047, 0.5595238095238095, 0.0], [0.5151515151515151, 0.48484848484848486, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 3 with reward 1.606291582694542
+01:40:38	logging naive policy simulation 10 to ./sims/naive_50_23420_014034_run10.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [-3.3233907403995246, -2.0, 8.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.5119047619047619, 0.4880952380952381], [0.4444444444444444, 0.5555555555555556, 0.0], [0.52, 0.48, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 1 with reward 4.8809523809523805
+01:40:38	logging naive policy simulation 11 to ./sims/naive_50_23420_014034_run11.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [-3.029667293041965, -2.0, 8.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.5319148936170213, 0.46808510638297873], [0.42857142857142855, 0.5714285714285714, 0.0], [0.4883720930232558, 0.5116279069767442, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 1 with reward 4.680851063829787
+01:40:38	logging naive policy simulation 12 to ./sims/naive_50_23420_014034_run12.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [-7.723334412572802, -2.0, 8.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.5490196078431373, 0.45098039215686275], [0.4056603773584906, 0.5943396226415094, 0.0], [0.4731182795698925, 0.5268817204301075, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 1 with reward 4.509803921568627
+01:40:38	logging naive policy simulation 13 to ./sims/naive_50_23420_014034_run13.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [-5.874677228714813, -2.0, 8.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.5225225225225225, 0.4774774774774775], [0.3793103448275862, 0.6206896551724138, 0.0], [0.4854368932038835, 0.5145631067961165, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 1 with reward 4.774774774774775
+01:40:38	logging naive policy simulation 14 to ./sims/naive_50_23420_014034_run14.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [-11.432777824804159, -2.0, 8.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.5130434782608696, 0.48695652173913045], [0.3790322580645161, 0.6209677419354839, 0.0], [0.4954128440366973, 0.5045871559633027, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 1 with reward 4.869565217391305
+01:40:38	logging naive policy simulation 15 to ./sims/naive_50_23420_014034_run15.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [-7.548701530860628, -2.0, 8.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.5161290322580645, 0.4838709677419355], [0.3897058823529412, 0.6102941176470589, 0.0], [0.49586776859504134, 0.5041322314049587, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 1 with reward 4.838709677419355
+01:40:38	logging naive policy simulation 16 to ./sims/naive_50_23420_014034_run16.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [-8.188253419052444, -2.0, 8.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.5147058823529411, 0.4852941176470588], [0.4084507042253521, 0.5915492957746479, 0.0], [0.4921875, 0.5078125, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 1 with reward 4.852941176470588
+01:40:38	logging naive policy simulation 17 to ./sims/naive_50_23420_014034_run17.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [-10.454488382605057, -2.0, 8.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.5244755244755245, 0.4755244755244755], [0.4217687074829932, 0.5782312925170068, 0.0], [0.5104895104895105, 0.48951048951048953, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 1 with reward 4.755244755244755
+01:40:38	logging naive policy simulation 18 to ./sims/naive_50_23420_014034_run18.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [-8.14855866124902, -2.0, 8.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.5194805194805194, 0.4805194805194805], [0.41875, 0.58125, 0.0], [0.5102040816326531, 0.4897959183673469, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 1 with reward 4.805194805194805
+01:40:38	logging naive policy simulation 19 to ./sims/naive_50_23420_014034_run19.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [-10.49692557698761, -2.0, 8.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.5093167701863354, 0.4906832298136646], [0.4294117647058823, 0.5705882352941176, 0.0], [0.506578947368421, 0.4934210526315789, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 1 with reward 4.906832298136646
+01:40:38	logging naive policy simulation 20 to ./sims/naive_50_23420_014034_run20.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [-10.02190324423345, -2.0, 8.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.5146198830409356, 0.4853801169590643], [0.423728813559322, 0.576271186440678, 0.0], [0.5094339622641509, 0.49056603773584906, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 1 with reward 4.853801169590643
+01:40:38	logging naive policy simulation 21 to ./sims/naive_50_23420_014034_run21.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [-10.37325685855234, -2.0, 8.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.5083798882681564, 0.49162011173184356], [0.44021739130434784, 0.5597826086956522, 0.0], [0.5117647058823529, 0.48823529411764705, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 1 with reward 4.916201117318436
+01:40:38	logging naive policy simulation 22 to ./sims/naive_50_23420_014034_run22.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [-11.355962600640197, -2.0, 8.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.4973544973544973, 0.5026455026455027], [0.44559585492227977, 0.5544041450777202, 0.0], [0.5229885057471264, 0.47701149425287354, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 1 with reward 5.026455026455027
+01:40:38	logging naive policy simulation 23 to ./sims/naive_50_23420_014034_run23.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [-9.646446246188152, -2.0, 8.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.49246231155778897, 0.507537688442211], [0.4504950495049505, 0.5495049504950495, 0.0], [0.5251396648044693, 0.4748603351955307, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 1 with reward 5.07537688442211
+01:40:38	logging naive policy simulation 24 to ./sims/naive_50_23420_014034_run24.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [-10.3278773652496, -2.0, 8.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.5096153846153846, 0.49038461538461536], [0.44549763033175355, 0.5545023696682464, 0.0], [0.5185185185185185, 0.48148148148148145, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 1 with reward 4.903846153846153
+01:40:38	logging naive policy simulation 25 to ./sims/naive_50_23420_014034_run25.txt
+01:40:38	estimating U using teacher 2 with beta 0.01
+01:40:38	Estimated U: [-8.72354967662256, -2.0, 8.0]
+01:40:38	True U: [3.0, 8.0, 8.0]
+01:40:38	Estimated D: Any[[0.0, 0.509090909090909, 0.4909090909090909], [0.4429223744292237, 0.5570776255707762, 0.0], [0.5124378109452736, 0.48756218905472637, 0.0]]
+01:40:38	True D: Array{Float64}[[0.0, 0.5, 0.5], [0.5, 0.5, 0.0], [0.5, 0.5, 0.0]]
+01:40:38	given U and D estimates, highest-reward arm is arm 1 with reward 4.909090909090909
+01:40:38	Max R:		(avg 8000.0)	[8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0, 8000.0]
+01:40:38	Random R:	(avg 3167.0)	[3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665, 3166.6666666666665]
+01:40:38	Naive R:	(avg 7193.0)	[5361.0, 5390.0, 7744.5, 7776.5, 5361.5, 5374.0, 7764.5, 5396.0, 5391.0, 7770.5, 7784.5, 7746.5, 7782.0, 7709.0, 7804.0, 7767.5, 7766.0, 7781.5, 7738.5, 7757.0, 7763.0, 7751.5, 7757.0, 7776.5, 7806.0]
+01:40:38	Normalized R:	(avg 0.9)	[0.670125, 0.67375, 0.9680625, 0.9720625, 0.6701875, 0.67175, 0.9705625, 0.6745, 0.673875, 0.9713125, 0.9730625, 0.9683125, 0.97275, 0.963625, 0.9755, 0.9709375, 0.97075, 0.9726875, 0.9673125, 0.969625, 0.970375, 0.9689375, 0.969625, 0.9720625, 0.97575]

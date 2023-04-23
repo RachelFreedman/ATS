@@ -1,0 +1,59 @@
+02:01:03	Running experiment with ID arms_23420_02013
+02:01:03	MyParameters
+  N: Int64 3
+  K: Int64 3
+  M: Int64 3
+  y: Float64 1.0
+  umax: Int64 10
+  u_grain: Int64 3
+  d_grain: Int64 3
+  beta: Array{Float64}((3,)) [0.0, 0.01, 50.0]
+  exp_iters: Int64 25
+  exp_steps: Int64 1000
+  s_index: Int64 4151
+  seed: Int64 1
+
+02:01:03	generated 27 utilities (each length 3 items)
+02:01:04	generated 216 arm distribution sets (each shape 3 arms x 3 items)
+02:01:04	generated 1 beta value sets (each length 3 teachers)
+02:01:05	generated 5832000 states, 5832 of which are potential start states
+02:01:05	generated 3 actions
+02:01:05	generated transition function
+02:01:05	generated reward function
+02:01:05	generated 21 observations
+02:01:05	generated observation function
+02:01:06	created POMDP
+02:01:06	created Random solver
+02:01:07	true state State(1000, [3.0, -2.0, 8.0], Array{Float64}[[0.5, 0.0, 0.5], [0.0, 0.5, 0.5], [0.5, 0.5, 0.0]], [0.0, 0.01, 50.0])
+02:01:07	hardcoded state: State(1000, [3.0, -2.0, 8.0], Array{Float64}[[0.5, 0.0, 0.5], [0.0, 0.5, 0.5], [0.5, 0.5, 0.0]], [0.0, 0.01, 50.0])
+02:01:07	logging random simulation 1 to ./sims/arms_23420_02013_run1.txt
+02:01:07	logging random simulation 2 to ./sims/arms_23420_02013_run2.txt
+02:01:08	logging random simulation 3 to ./sims/arms_23420_02013_run3.txt
+02:01:08	logging random simulation 4 to ./sims/arms_23420_02013_run4.txt
+02:01:08	logging random simulation 5 to ./sims/arms_23420_02013_run5.txt
+02:01:08	logging random simulation 6 to ./sims/arms_23420_02013_run6.txt
+02:01:08	logging random simulation 7 to ./sims/arms_23420_02013_run7.txt
+02:01:08	logging random simulation 8 to ./sims/arms_23420_02013_run8.txt
+02:01:08	logging random simulation 9 to ./sims/arms_23420_02013_run9.txt
+02:01:08	logging random simulation 10 to ./sims/arms_23420_02013_run10.txt
+02:01:08	logging random simulation 11 to ./sims/arms_23420_02013_run11.txt
+02:01:08	logging random simulation 12 to ./sims/arms_23420_02013_run12.txt
+02:01:08	logging random simulation 13 to ./sims/arms_23420_02013_run13.txt
+02:01:08	logging random simulation 14 to ./sims/arms_23420_02013_run14.txt
+02:01:08	logging random simulation 15 to ./sims/arms_23420_02013_run15.txt
+02:01:08	logging random simulation 16 to ./sims/arms_23420_02013_run16.txt
+02:01:08	logging random simulation 17 to ./sims/arms_23420_02013_run17.txt
+02:01:08	logging random simulation 18 to ./sims/arms_23420_02013_run18.txt
+02:01:08	logging random simulation 19 to ./sims/arms_23420_02013_run19.txt
+02:01:08	logging random simulation 20 to ./sims/arms_23420_02013_run20.txt
+02:01:08	logging random simulation 21 to ./sims/arms_23420_02013_run21.txt
+02:01:08	logging random simulation 22 to ./sims/arms_23420_02013_run22.txt
+02:01:08	logging random simulation 23 to ./sims/arms_23420_02013_run23.txt
+02:01:08	logging random simulation 24 to ./sims/arms_23420_02013_run24.txt
+02:01:08	logging random simulation 25 to ./sims/arms_23420_02013_run25.txt
+02:01:08	ran 25 random rollouts for 1000 timesteps each
+02:01:08	random solver doesn't update belief, so not serializing beliefs
+02:01:08	Max R:		(avg 5500.0)	[5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0, 5500.0]
+02:01:08	Mean R:	(avg 1500.0)	[1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0, 1500.0] (taking expectation over actions)
+02:01:08	Random R:	(avg 2995.0)	[2955.0, 3025.0, 3127.5, 3030.0, 2985.0, 2817.5, 2987.5, 2905.0, 3052.5, 3005.0, 2992.5, 2917.5, 2950.0, 3095.0, 2912.5, 3057.5, 2980.0, 2900.0, 2980.0, 3035.0, 3045.0, 2977.5, 2985.0, 3175.0, 2972.5]
+02:01:08	Normalized R:	(avg 0.54)	[0.5372727272727272, 0.55, 0.5686363636363636, 0.5509090909090909, 0.5427272727272727, 0.5122727272727273, 0.5431818181818182, 0.5281818181818182, 0.555, 0.5463636363636364, 0.5440909090909091, 0.5304545454545454, 0.5363636363636364, 0.5627272727272727, 0.5295454545454545, 0.5559090909090909, 0.5418181818181819, 0.5272727272727272, 0.5418181818181819, 0.5518181818181818, 0.5536363636363636, 0.5413636363636364, 0.5427272727272727, 0.5772727272727273, 0.5404545454545454]
