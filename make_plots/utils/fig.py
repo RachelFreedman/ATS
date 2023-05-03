@@ -5,15 +5,54 @@ import pandas as pd
 import seaborn as sns
 import matplotlib
 import matplotlib.pyplot as plt
+from matplotlib import rcParams
+from cycler import cycler
 
-matplotlib.rcParams['figure.figsize'] = (10, 7)
+
+# make plots look nice
+# -- Axes --
+rcParams['axes.spines.bottom'] = True
+rcParams['axes.spines.left'] = False
+rcParams['axes.spines.right'] = False
+rcParams['axes.spines.top'] = False
+rcParams['axes.grid'] = True
+rcParams['axes.grid.axis'] = 'y'
+rcParams['grid.color'] = 'grey'
+rcParams['grid.linewidth'] = 0.5
+rcParams['axes.axisbelow'] = True
+rcParams['axes.linewidth'] = 2
+rcParams['axes.ymargin'] = 0
+# -- Ticks and tick labels --
+rcParams['axes.edgecolor'] = 'grey'
+rcParams['xtick.color'] = 'grey'
+rcParams['ytick.color'] = 'grey'
+rcParams['xtick.major.width'] = 2
+rcParams['ytick.major.width'] = 0
+rcParams['xtick.major.size'] = 5
+rcParams['ytick.major.size'] = 0
+# -- Fonts --
+rcParams['font.size'] = 12
+rcParams['font.family'] = 'serif'
+rcParams['text.color'] = 'grey'
+rcParams['axes.labelcolor'] = 'grey'
+# -- Figure size --
+rcParams['figure.figsize'] = (10, 7)
+# -- Saving Options --
+rcParams['savefig.bbox'] = 'tight'
+rcParams['savefig.dpi'] = 500
+rcParams['savefig.transparent'] = True
+# -- Plot Styles --
+rcParams['lines.linewidth'] = 3
+navy = (56 / 256, 74 / 256, 143 / 256)
+teal = (106 / 256, 197 / 256, 179 / 256)
+pink = [199 / 255, 99 / 255, 150 / 255]
+rcParams['axes.prop_cycle'] = cycler(color=[teal, navy, pink])
 
 B_ACTIONS = ["B1", "B2", "B3", "B"]
 C_ACTIONS = ["C1", "C2", "C3"]
 ACTIONS = B_ACTIONS + C_ACTIONS
 
 class State:
-
     def __init__(self, t, u, d, b):
         self.t = t
         self.u = u
@@ -29,15 +68,30 @@ class State:
     def __repr__(self) -> str:
         return f"State(t={self.t}, u={self.u}, d={self.d}, b={self.b})"
         
+    def __eq__(self, other) -> bool:
+        return np.all(self.u == other.u) and np.all(self.d == other.d) and np.all(self.b == other.b)
+    
+    def __hash__(self) -> int:
+        return hash((tuple(self.u), tuple(self.d.flatten()), tuple(self.b)))
+    
+    def best_arm(self) -> str:
+        return f'C{np.argmax(self.arm_rewards)+1}'
+    
+    def u_error(self, other) -> float:
+        return np.linalg.norm(self.u - other.u)
+    
+    def d_error(self, other) -> float:
+        return np.linalg.norm(self.d - other.d)
+    
+    def arm_reward_error(self, other) -> float:
+        return np.linalg.norm(self.arm_rewards - other.arm_rewards)
+    
     def parse(s: str):
         t = int(re.search(r"\d+", s).group())
         u = np.array(eval(re.search(r"\[.*?\]", s).group()))
         d = np.array(eval(re.search(r"Array{Float64}(\[.*?\]\])", s).group(1)))
         b = np.array(eval(re.findall(r'\[.*?\]', s)[-1]))
         return State(t, u, d, b)
-    
-    def best_arm(self) -> str:
-        return f'C{np.argmax(self.arm_rewards)+1}'
 
 def import_csv(ids: list[str], runs: int) -> pd.DataFrame:
     """Import data from csv file.
