@@ -1,3 +1,9 @@
 # Active Teacher Selection (ATS) experiments
 
-This codebase implements a hidden-utility-bandit problem as a POMDP, then benchmarks the performance of ATS and several other algorithms. Use the julia scripts in the `run_scripts` directory to run experiments, and use the juypter notebooks in the `make_plots` directory to analyze the results.
+This codebase implements a hidden-utility-bandit (HUB) problem as a POMDP, then benchmarks the performance of active teacher selection (ATS) and several other algorithms. See the `experiment_scripts` directory for algorithmic implementation.
+
+Use the julia scripts in the `run_scripts` directory to run experiments. For example:
+
+```
+julia run_scripts/run_all.sh
+```
